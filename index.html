@@ -1,182 +1,513 @@
+```html id="p9x3kd"
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Burger Anas</title>
 
     <link rel="stylesheet" href="style.css">
+
 </head>
+
 
 <body>
 
-    <header>
-        <h1>Burger Anas</h1>
 
-        <nav>
-            <a href="#home">Home</a>
-            <a href="#menu">Menu</a>
-            <a href="#contact">Contact</a>
-        </nav>
-    </header>
+<!-- ====================
+     HEADER
+==================== -->
 
+<header>
 
-    <main>
-
-        <section class="hero" id="home"></section>
-            <h2>The Best Burgers in Town</h2>
-
-            <p>
-                Fresh burgers made with love.
-            </p>
-
-            <button id="viewMenu">View Menu</button>
-        </section>
+    <a href="#home" class="logo">
+        🍔
+        <span>Burger Anas</span>
+    </a>
 
 
-        <section class="menu" id="menu"></section>
+    <nav>
 
-            <h2>Our Menu</h2>
+        <a href="#home">
+            Home
+        </a>
 
-            <div class="products">
+        <a href="#menu">
+            Menu
+        </a>
 
-                
+        <a href="#contact">
+            Contact
+        </a>
 
-                <div class="product">
-                    <img src="./images.jpg" alt="Classic Burger">
-                
-                    <h3>Classic Burger</h3>
-                
-                    <p>قطعه من البرجر , صوص الكاتشب وصوص الشيدر</p>
-                
-                    <span>120 EGP</span>
-                
-                    <button onclick="addToCart('Classic Burger', 120)">
-                        Add to Cart
-                    </button>
-                </div>
+    </nav>
 
 
+    <a href="#cart" class="cart-button">
 
-                <div class="product">
-                    <img src="./pngtree-a-photo-big-double-cheddar-cheeseburger-with-chicken-cutlet-image_3108377.jpg" alt="Double Burger">
-                
-                    <h3>Double Burger</h3>
-                
-                    <p>قطعتين من البرجر , صوص من اختيارك , بطاطس</p>
-                
-                    <span>150 EGP</span>
-                
-                    <button onclick="addToCart('Double Burger', 150)">
-                        Add to Cart
-                    </button>
-                </div>
+        🛒
+
+        <span>
+            Cart
+        </span>
+
+        <b id="cartCount">
+            0
+        </b>
+
+    </a>
+
+</header>
 
 
 
-                <div class="product">
-                    <img src="./pngtree-crunchy-chicken-burger-with-lettuce-tomato-and-cheese-slices-on-picture-image_16039173.jpg" alt="Chicken Burger">
-                
-                    <h3>Chicken Burger</h3>
-                
-                    <p>قطعه من برجر الفراخ , صوص من اختيارك , بطاطس</p>
-                
-                    <span>140 EGP</span>
-                
-                    <button onclick="addToCart('Chicken Burger', 140)">
-                        Add to Cart
-                    </button>
-                </div>
+<main>
 
-            </div>
 
-        </section>
+<!-- ====================
+     HERO
+==================== -->
 
-        <section class="cart">
+<section class="hero" id="home">
 
-            <h2>Your Cart</h2>
-        
-            <div id="cartItems">
-                <p>Your cart is empty.</p>
-            </div>
-        
+    <div class="hero-content">
+
+        <span class="hero-badge">
+            🍔 BURGER ANAS
+        </span>
+
+        <h2>
+            The Best Burgers in Town
+        </h2>
+
+        <p>
+            Fresh burgers made with love.
+        </p>
+
+        <button id="viewMenu">
+            View Menu
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- ====================
+     MENU
+==================== -->
+
+<section class="menu" id="menu">
+
+    <h2>
+        Our Menu
+    </h2>
+
+
+    <div class="products">
+
+
+        <!-- CLASSIC BURGER -->
+
+        <div class="product">
+
+            <img
+                src="images/images.jpg"
+                alt="Classic Burger"
+            >
+
+
             <h3>
-                Total: <span id="cartTotal">0</span> EGP
+                Classic Burger
             </h3>
 
-            <button id="clearCart">
-                Clear Cart
+
+            <p>
+                قطعة من البرجر , صوص الكاتشب وصوص الشيدر
+            </p>
+
+
+            <span>
+                120 EGP
+            </span>
+
+
+            <button
+                onclick="addToCart('Classic Burger', 120)"
+            >
+                Add to Cart
             </button>
-        
-        </section>
- 
-        <section class="checkout">
 
-            <h2>Checkout</h2>
-        
-            <form id="checkoutForm">
-        
-                <input
-                    type="text"
-                    id="customerName"
-                    placeholder="Your Name"
-                >
-        
-                <input
-                    type="tel"
-                    id="customerPhone"
-                    placeholder="Your Phone"
-                >
-        
-                <textarea
-                    id="customerAddress"
-                    placeholder="Your Address"
-                ></textarea>
-        
-                <button type="submit" id="placeOrderBtn">
-                    Place Order
-                </button>
-        
-            </form>
-        
-            <div id="orderMessage"></div>
-        </section>
-
-        <section class="contact" id="contact">
-
-            <h2>Contact Us</h2>
-        
-            <p>Have a question? Contact Burger House.</p>
-        
-            <div class="contact-info">
-        
-                <p>📞 Phone: 01155423785</p>
-        
-                <p>📧 Email: burgeranas848@gmail.com</p>
-        
-                <p>📍 Location: Cairo, Egypt</p>
-        
-            </div>
-        
-        </section>
-
-    </main>
-
-    <footer>
-
-        <h3>Burger House</h3>
-    
-        <p>Fresh burgers made with love.</p>
-    
-        <p>© 2026 Burger House. All rights reserved.</p>
-    
-    </footer>
+        </div>
 
 
-    <script src="script.js"></script>
+
+        <!-- DOUBLE BURGER -->
+
+        <div class="product">
+
+            <img
+                src="images/pngtree-a-photo-big-double-cheddar-cheeseburger-with-chicken-cutlet-image_3108377.jpg"
+                alt="Double Burger"
+            >
+
+
+            <h3>
+                Double Burger
+            </h3>
+
+
+            <p>
+                قطعتين من البرجر , صوص من اختيارك , بطاطس
+            </p>
+
+
+            <span>
+                150 EGP
+            </span>
+
+
+            <button
+                onclick="addToCart('Double Burger', 150)"
+            >
+                Add to Cart
+            </button>
+
+        </div>
+
+
+
+        <!-- CHICKEN BURGER -->
+
+        <div class="product">
+
+            <img
+                src="images/pngtree-crunchy-chicken-burger-with-lettuce-tomato-and-cheese-slices-on-picture-image_16039173.jpg"
+                alt="Chicken Burger"
+            >
+
+
+            <h3>
+                Chicken Burger
+            </h3>
+
+
+            <p>
+                قطعة من برجر الفراخ , صوص من اختيارك , بطاطس
+            </p>
+
+
+            <span>
+                140 EGP
+            </span>
+
+
+            <button
+                onclick="addToCart('Chicken Burger', 140)"
+            >
+                Add to Cart
+            </button>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ====================
+     CART
+==================== -->
+
+<section
+    class="cart"
+    id="cart"
+>
+
+    <h2>
+        🛒 Your Cart
+    </h2>
+
+
+    <div id="cartItems"></div>
+
+
+    <h3>
+
+        Total:
+
+        <span id="cartTotal">
+            0
+        </span>
+
+        EGP
+
+    </h3>
+
+
+    <button
+        id="clearCart"
+        type="button"
+    >
+        Clear Cart
+    </button>
+
+</section>
+
+
+
+<!-- ====================
+     CHECKOUT
+==================== -->
+
+<section class="checkout">
+
+    <h2>
+        Checkout
+    </h2>
+
+
+    <form id="checkoutForm">
+
+
+        <input
+            type="text"
+            id="customerName"
+            placeholder="Your Name"
+        >
+
+
+        <input
+            type="tel"
+            id="customerPhone"
+            placeholder="Your Phone"
+        >
+
+
+        <textarea
+            id="customerAddress"
+            placeholder="Your Address"
+        ></textarea>
+
+
+        <button
+            type="submit"
+            id="placeOrderBtn"
+        >
+            Place Order
+        </button>
+
+
+    </form>
+
+
+    <div id="orderMessage"></div>
+
+</section>
+
+
+
+<!-- ====================
+     CONTACT
+==================== -->
+
+<section
+    class="contact"
+    id="contact"
+>
+
+    <h2>
+        Contact Us
+    </h2>
+
+
+    <p>
+        Have a question? Contact Burger Anas.
+    </p>
+
+
+    <div class="contact-info">
+
+
+        <p>
+            📞 Phone: 01208119371
+        </p>
+
+
+        <p>
+            📧 Email: burgeranas848@gmail.com
+        </p>
+
+
+        <p>
+            📍 Location: Cairo, Egypt
+        </p>
+
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- ====================
+     FOOTER
+==================== -->
+
+<footer>
+
+    <h3>
+        🍔 Burger Anas
+    </h3>
+
+
+    <p>
+        Fresh burgers made with love.
+    </p>
+
+
+    <p>
+        © 2026 Burger Anas. All rights reserved.
+    </p>
+
+</footer>
+
+
+
+<!-- ====================
+     FIREBASE
+==================== -->
+
+<script type="module">
+
+    import {
+        initializeApp
+    } from
+    "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+    import {
+        getFirestore,
+        collection,
+        addDoc
+    } from
+    "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+    const firebaseConfig = {
+
+        apiKey:
+        "AIzaSyD_siM-u7duvYSCOmDTGPw3Ga9KKSSOT5c",
+
+        authDomain:
+        "burger-anas.firebaseapp.com",
+
+        projectId:
+        "burger-anas",
+
+        storageBucket:
+        "burger-anas.firebasestorage.app",
+
+        messagingSenderId:
+        "989817449579",
+
+        appId:
+        "1:989817449579:web:99085ebbc201d3e370552e"
+
+    };
+
+
+    const app =
+        initializeApp(firebaseConfig);
+
+
+    const db =
+        getFirestore(app);
+
+
+    window.firebaseDB = db;
+
+    window.firebaseCollection = collection;
+
+    window.firebaseAddOrder = addDoc;
+
+
+    console.log(
+        "Firebase connected successfully"
+    );
+
+</script>
+
+
+
+<!-- ====================
+     CART BUTTON
+==================== -->
+
+<script>
+
+    function updateCartCount() {
+
+        const cart =
+            JSON.parse(
+                localStorage.getItem("cart")
+            ) || [];
+
+
+        let count = 0;
+
+
+        cart.forEach(function(product) {
+
+            count += product.quantity;
+
+        });
+
+
+        const cartCount =
+            document.getElementById("cartCount");
+
+
+        if (cartCount) {
+
+            cartCount.textContent =
+                count;
+
+        }
+
+    }
+
+
+    updateCartCount();
+
+
+    window.addEventListener(
+        "storage",
+        updateCartCount
+    );
+
+</script>
+
+
+
+<!-- ====================
+     MAIN JAVASCRIPT
+==================== -->
+
+<script src="script.js"></script>
+
 
 </body>
 
 </html>
+```
