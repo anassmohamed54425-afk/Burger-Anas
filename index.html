@@ -1,4 +1,3 @@
-```html id="p9x3kd"
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,11 +5,114 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Burger Anas</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* =========================
+           CUSTOMER STATUS
+        ========================= */
+
+        .customer-status {
+            margin-top: 8px;
+            margin-bottom: 12px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            display: none;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+
+        .customer-status.success {
+            display: block;
+            background: #064e3b;
+            color: #a7f3d0;
+        }
+
+
+        .customer-status.new {
+            display: block;
+            background: #1e3a8a;
+            color: #bfdbfe;
+        }
+
+
+        .customer-status.error {
+            display: block;
+            background: #7f1d1d;
+            color: #fecaca;
+        }
+
+
+        /* =========================
+           READ ONLY FIELDS
+        ========================= */
+
+        input[readonly],
+        textarea[readonly] {
+            opacity: 0.75;
+            cursor: not-allowed;
+        }
+
+
+        /* =========================
+           CHECKOUT
+        ========================= */
+
+        .checkout form {
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        .checkout form input,
+        .checkout form textarea,
+        .checkout form button {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+
+        /* 
+           مهم:
+           رسالة الرقم تظهر مباشرة
+           تحت خانة الموبايل
+        */
+
+        #customerStatus {
+            order: 2;
+        }
+
+
+        #customerPhone {
+            order: 1;
+        }
+
+
+        #customerName {
+            order: 3;
+        }
+
+
+        #customerAddress {
+            order: 4;
+        }
+
+
+        #placeOrderBtn {
+            order: 5;
+        }
+
+    </style>
 
 </head>
 
@@ -18,15 +120,16 @@
 <body>
 
 
-<!-- ====================
-     HEADER
-==================== -->
-
 <header>
 
     <a href="#home" class="logo">
+
         🍔
-        <span>Burger Anas</span>
+
+        <span>
+            Burger Anas
+        </span>
+
     </a>
 
 
@@ -68,11 +171,14 @@
 <main>
 
 
-<!-- ====================
-     HERO
-==================== -->
+<!-- =========================
+     HOME
+========================= -->
 
-<section class="hero" id="home">
+<section
+    class="hero"
+    id="home"
+>
 
     <div class="hero-content">
 
@@ -80,13 +186,16 @@
             🍔 BURGER ANAS
         </span>
 
+
         <h2>
             The Best Burgers in Town
         </h2>
 
+
         <p>
             Fresh burgers made with love.
         </p>
+
 
         <button id="viewMenu">
             View Menu
@@ -98,11 +207,14 @@
 
 
 
-<!-- ====================
+<!-- =========================
      MENU
-==================== -->
+========================= -->
 
-<section class="menu" id="menu">
+<section
+    class="menu"
+    id="menu"
+>
 
     <h2>
         Our Menu
@@ -117,7 +229,7 @@
         <div class="product">
 
             <img
-                src="./images.jpg"
+                src="images/images.jpg"
                 alt="Classic Burger"
             >
 
@@ -152,7 +264,7 @@
         <div class="product">
 
             <img
-                src="./pngtree-a-photo-big-double-cheddar-cheeseburger-with-chicken-cutlet-image_3108377.jpg"
+                src="images/pngtree-a-photo-big-double-cheddar-cheeseburger-with-chicken-cutlet-image_3108377.jpg"
                 alt="Double Burger"
             >
 
@@ -187,7 +299,7 @@
         <div class="product">
 
             <img
-                src="./pngtree-crunchy-chicken-burger-with-lettuce-tomato-and-cheese-slices-on-picture-image_16039173.jpg"
+                src="images/pngtree-crunchy-chicken-burger-with-lettuce-tomato-and-cheese-slices-on-picture-image_16039173.jpg"
                 alt="Chicken Burger"
             >
 
@@ -222,9 +334,9 @@
 
 
 
-<!-- ====================
+<!-- =========================
      CART
-==================== -->
+========================= -->
 
 <section
     class="cart"
@@ -263,9 +375,9 @@
 
 
 
-<!-- ====================
+<!-- =========================
      CHECKOUT
-==================== -->
+========================= -->
 
 <section class="checkout">
 
@@ -277,25 +389,60 @@
     <form id="checkoutForm">
 
 
-        <input
-            type="text"
-            id="customerName"
-            placeholder="Your Name"
-        >
-
+        <!-- =====================
+             PHONE
+        ====================== -->
 
         <input
             type="tel"
             id="customerPhone"
             placeholder="Your Phone"
+            autocomplete="tel"
+            required
         >
 
+
+        <!-- =====================
+             PHONE STATUS
+
+             الرسالة هنا مباشرة
+             تحت رقم الموبايل
+        ====================== -->
+
+        <div
+            id="customerStatus"
+            class="customer-status"
+        ></div>
+
+
+        <!-- =====================
+             NAME
+        ====================== -->
+
+        <input
+            type="text"
+            id="customerName"
+            placeholder="Your Name"
+            autocomplete="name"
+            required
+        >
+
+
+        <!-- =====================
+             ADDRESS
+        ====================== -->
 
         <textarea
             id="customerAddress"
             placeholder="Your Address"
+            autocomplete="street-address"
+            required
         ></textarea>
 
+
+        <!-- =====================
+             PLACE ORDER
+        ====================== -->
 
         <button
             type="submit"
@@ -308,15 +455,21 @@
     </form>
 
 
+    <!-- 
+        خليت العنصر موجود لأن script.js
+        ممكن يكون محتاجه، لكن مش هنحط فيه
+        رسالة customerStatus تاني.
+    -->
+
     <div id="orderMessage"></div>
 
 </section>
 
 
 
-<!-- ====================
+<!-- =========================
      CONTACT
-==================== -->
+========================= -->
 
 <section
     class="contact"
@@ -335,7 +488,6 @@
 
     <div class="contact-info">
 
-
         <p>
             📞 Phone: 01208119371
         </p>
@@ -350,7 +502,6 @@
             📍 Location: Cairo, Egypt
         </p>
 
-
     </div>
 
 </section>
@@ -360,9 +511,9 @@
 
 
 
-<!-- ====================
+<!-- =========================
      FOOTER
-==================== -->
+========================= -->
 
 <footer>
 
@@ -384,9 +535,9 @@
 
 
 
-<!-- ====================
+<!-- =========================
      FIREBASE
-==================== -->
+========================= -->
 
 <script type="module">
 
@@ -399,10 +550,19 @@
     import {
         getFirestore,
         collection,
-        addDoc
+        addDoc,
+        getDocs,
+        query,
+        where,
+        doc,
+        setDoc
     } from
     "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+
+    /* =========================
+       FIREBASE CONFIG
+    ========================= */
 
     const firebaseConfig = {
 
@@ -435,24 +595,550 @@
         getFirestore(app);
 
 
-    window.firebaseDB = db;
+    window.firebaseDB =
+        db;
 
-    window.firebaseCollection = collection;
 
-    window.firebaseAddOrder = addDoc;
+    window.firebaseCollection =
+        collection;
+
+
+    window.firebaseAddOrder =
+        addDoc;
 
 
     console.log(
         "Firebase connected successfully"
     );
 
+
+
+    /* =========================
+       NORMALIZE PHONE
+    ========================= */
+
+    function normalizePhone(phone) {
+
+        let value =
+            String(phone || "")
+                .trim()
+                .replace(/\s+/g, "")
+                .replace(/-/g, "")
+                .replace(/\(/g, "")
+                .replace(/\)/g, "");
+
+
+        if (value.startsWith("+")) {
+
+            value =
+                value.substring(1);
+
+        }
+
+
+        if (value.startsWith("0020")) {
+
+            value =
+                value.substring(2);
+
+        }
+
+
+        if (
+            value.startsWith("20") &&
+            value.length === 12
+        ) {
+
+            return value;
+
+        }
+
+
+        if (
+            value.startsWith("0") &&
+            value.length === 11
+        ) {
+
+            return "20" +
+                   value.substring(1);
+
+        }
+
+
+        return value;
+
+    }
+
+
+    window.normalizePhone =
+        normalizePhone;
+
+
+
+    /* =========================
+       FIND CUSTOMER
+    ========================= */
+
+    window.getCustomerByPhone =
+        async function(phone) {
+
+            const normalizedPhone =
+                normalizePhone(phone);
+
+
+            if (!normalizedPhone) {
+
+                return null;
+
+            }
+
+
+            const customersRef =
+                collection(
+                    db,
+                    "customers"
+                );
+
+
+            const customersQuery =
+                query(
+                    customersRef,
+                    where(
+                        "normalizedPhone",
+                        "==",
+                        normalizedPhone
+                    )
+                );
+
+
+            const snapshot =
+                await getDocs(
+                    customersQuery
+                );
+
+
+            if (
+                snapshot.empty
+            ) {
+
+                return null;
+
+            }
+
+
+            const customerDoc =
+                snapshot.docs[0];
+
+
+            return {
+
+                id:
+                    customerDoc.id,
+
+                ...customerDoc.data()
+
+            };
+
+        };
+
+
+
+    /* =========================
+       SAVE CUSTOMER
+    ========================= */
+
+    window.saveCustomer =
+        async function(
+            customerName,
+            phone,
+            address
+        ) {
+
+            const normalizedPhone =
+                normalizePhone(phone);
+
+
+            if (!normalizedPhone) {
+
+                throw new Error(
+                    "Invalid phone number."
+                );
+
+            }
+
+
+            const customerRef =
+                doc(
+                    db,
+                    "customers",
+                    normalizedPhone
+                );
+
+
+            const existingCustomer =
+                await window.getCustomerByPhone(
+                    phone
+                );
+
+
+            /*
+                لو العميل موجود
+                ممنوع نغير بياناته
+            */
+
+            if (existingCustomer) {
+
+                return existingCustomer;
+
+            }
+
+
+            /*
+                عميل جديد
+            */
+
+            const customerData = {
+
+                customerName:
+                    String(
+                        customerName || ""
+                    ).trim(),
+
+                phone:
+                    String(
+                        phone || ""
+                    ).trim(),
+
+                normalizedPhone:
+                    normalizedPhone,
+
+                address:
+                    String(
+                        address || ""
+                    ).trim(),
+
+                createdAt:
+                    new Date()
+
+            };
+
+
+            await setDoc(
+                customerRef,
+                customerData
+            );
+
+
+            return {
+
+                id:
+                    normalizedPhone,
+
+                ...customerData
+
+            };
+
+        };
+
+
+
+    /* =========================
+       CUSTOMER INPUTS
+    ========================= */
+
+    const phoneInput =
+        document.getElementById(
+            "customerPhone"
+        );
+
+
+    const nameInput =
+        document.getElementById(
+            "customerName"
+        );
+
+
+    const addressInput =
+        document.getElementById(
+            "customerAddress"
+        );
+
+
+    const customerStatus =
+        document.getElementById(
+            "customerStatus"
+        );
+
+
+    let customerFound =
+        false;
+
+
+    let customerLookupRunning =
+        false;
+
+
+
+    /* =========================
+       RESET CUSTOMER
+    ========================= */
+
+    function resetCustomerFields() {
+
+        customerFound =
+            false;
+
+
+        nameInput.readOnly =
+            false;
+
+
+        addressInput.readOnly =
+            false;
+
+
+        customerStatus.textContent =
+            "";
+
+
+        customerStatus.className =
+            "customer-status";
+
+    }
+
+
+
+    /* =========================
+       CHECK CUSTOMER
+    ========================= */
+
+    async function checkCustomer() {
+
+        const phone =
+            phoneInput.value.trim();
+
+
+        if (!phone) {
+
+            resetCustomerFields();
+
+            return;
+
+        }
+
+
+        const normalizedPhone =
+            normalizePhone(phone);
+
+
+        if (
+            normalizedPhone.length < 10
+        ) {
+
+            resetCustomerFields();
+
+            return;
+
+        }
+
+
+        if (
+            customerLookupRunning
+        ) {
+
+            return;
+
+        }
+
+
+        customerLookupRunning =
+            true;
+
+
+        /*
+            رسالة أثناء البحث
+        */
+
+        customerStatus.textContent =
+            "Checking customer...";
+
+
+        customerStatus.className =
+            "customer-status new";
+
+
+        try {
+
+            const customer =
+                await window.getCustomerByPhone(
+                    phone
+                );
+
+
+            /* =====================
+               EXISTING CUSTOMER
+            ===================== */
+
+            if (customer) {
+
+                customerFound =
+                    true;
+
+
+                nameInput.value =
+                    customer.customerName ||
+                    customer.name ||
+                    "";
+
+
+                addressInput.value =
+                    customer.address ||
+                    "";
+
+
+                /*
+                    قفل الاسم والعنوان
+                */
+
+                nameInput.readOnly =
+                    true;
+
+
+                addressInput.readOnly =
+                    true;
+
+
+                /*
+                    رسالة التأكيد
+                    تظهر تحت رقم الموبايل
+                */
+
+                customerStatus.textContent =
+                    "✓ This phone number belongs to an existing customer. Saved data has been loaded.";
+
+
+                customerStatus.className =
+                    "customer-status success";
+
+            }
+
+
+            /* =====================
+               NEW CUSTOMER
+            ===================== */
+
+            else {
+
+                customerFound =
+                    false;
+
+
+                nameInput.readOnly =
+                    false;
+
+
+                addressInput.readOnly =
+                    false;
+
+
+                customerStatus.textContent =
+                    "New customer. Please enter your name and address.";
+
+
+                customerStatus.className =
+                    "customer-status new";
+
+            }
+
+        }
+
+
+        catch (error) {
+
+            console.error(
+                "Customer lookup error:",
+                error
+            );
+
+
+            customerStatus.textContent =
+                "Could not check customer data: " +
+                error.message;
+
+
+            customerStatus.className =
+                "customer-status error";
+
+        }
+
+
+        finally {
+
+            customerLookupRunning =
+                false;
+
+        }
+
+    }
+
+
+
+    /* =========================
+       PHONE BLUR
+    ========================= */
+
+    phoneInput.addEventListener(
+        "blur",
+        checkCustomer
+    );
+
+
+
+    /* =========================
+       PHONE CHANGE
+    ========================= */
+
+    phoneInput.addEventListener(
+        "change",
+        checkCustomer
+    );
+
+
+
+    /* =========================
+       PHONE INPUT
+    ========================= */
+
+    phoneInput.addEventListener(
+        "input",
+        function() {
+
+            /*
+                لو العميل موجود
+                نسيب البيانات كما هي
+            */
+
+            if (
+                customerFound
+            ) {
+
+                return;
+
+            }
+
+
+            resetCustomerFields();
+
+        }
+    );
+
 </script>
 
 
 
-<!-- ====================
-     CART BUTTON
-==================== -->
+<!-- =========================
+     CART COUNT
+========================= -->
 
 <script>
 
@@ -467,15 +1153,22 @@
         let count = 0;
 
 
-        cart.forEach(function(product) {
+        cart.forEach(
+            function(product) {
 
-            count += product.quantity;
+                count +=
+                    Number(
+                        product.quantity
+                    ) || 0;
 
-        });
+            }
+        );
 
 
         const cartCount =
-            document.getElementById("cartCount");
+            document.getElementById(
+                "cartCount"
+            );
 
 
         if (cartCount) {
@@ -500,9 +1193,9 @@
 
 
 
-<!-- ====================
+<!-- =========================
      MAIN JAVASCRIPT
-==================== -->
+========================= -->
 
 <script src="script.js"></script>
 
@@ -510,4 +1203,3 @@
 </body>
 
 </html>
-```
