@@ -1,3 +1,8 @@
+/* ==========================================================
+   BURGER ANAS - RESPONSIVE STYLE
+   Desktop + Tablet + Mobile
+========================================================== */
+
 /* ====================
    RESET
 ==================== */
@@ -17,7 +22,7 @@ body {
     font-family: Arial, sans-serif;
     background: #111;
     color: #fff;
-    line-height: 1.5;
+    line-height: 1.6;
     overflow-x: hidden;
 }
 
@@ -31,31 +36,44 @@ header {
     top: 0;
     z-index: 1000;
 
+    min-height: 70px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 15px;
 
-    padding: 13px 6%;
+    gap: 25px;
 
-    background: rgba(17, 17, 17, 0.97);
+    padding: 12px 5%;
+
+    background: rgba(17, 17, 17, 0.96);
+
     border-bottom: 1px solid #333;
 
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
 }
 
 .logo {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
     color: #ffb703;
+
     text-decoration: none;
 
     font-size: 25px;
     font-weight: 900;
 
     white-space: nowrap;
+
+    transition: 0.2s;
 }
 
 .logo:hover {
     color: #ffd166;
+    transform: translateY(-1px);
 }
 
 
@@ -66,19 +84,23 @@ header {
 nav {
     display: flex;
     align-items: center;
-    gap: 20px;
+
+    gap: 28px;
 }
 
 nav a {
     position: relative;
 
     color: #fff;
+
     text-decoration: none;
 
     font-size: 15px;
     font-weight: bold;
 
-    transition: 0.2s;
+    padding: 6px 0;
+
+    transition: 0.25s;
 }
 
 nav a:hover {
@@ -89,15 +111,16 @@ nav a::after {
     content: "";
 
     position: absolute;
+
     left: 0;
-    bottom: -5px;
+    bottom: 0;
 
     width: 0;
     height: 2px;
 
     background: #ffb703;
 
-    transition: 0.2s;
+    transition: 0.25s;
 }
 
 nav a:hover::after {
@@ -116,27 +139,35 @@ nav a:hover::after {
     align-items: center;
     justify-content: center;
 
-    gap: 6px;
+    gap: 7px;
 
-    padding: 8px 12px;
+    min-width: 90px;
+
+    padding: 9px 14px;
 
     background: #242424;
 
     border: 1px solid #444;
-    border-radius: 9px;
+    border-radius: 10px;
 
     color: #fff;
+
     text-decoration: none;
 
     font-size: 14px;
     font-weight: bold;
 
-    transition: 0.2s;
+    transition: 0.25s;
 }
 
 .cart-button:hover {
     color: #ffb703;
+
     border-color: #ffb703;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 6px 15px rgba(255, 183, 3, 0.12);
 }
 
 #cartCount {
@@ -145,8 +176,8 @@ nav a:hover::after {
     top: -7px;
     right: -7px;
 
-    min-width: 20px;
-    height: 20px;
+    min-width: 21px;
+    height: 21px;
 
     display: flex;
     align-items: center;
@@ -155,9 +186,11 @@ nav a:hover::after {
     padding: 2px 5px;
 
     background: #e63946;
+
     color: #fff;
 
     border: 2px solid #111;
+
     border-radius: 50%;
 
     font-size: 11px;
@@ -173,9 +206,8 @@ nav a:hover::after {
     min-height: 500px;
 
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
     text-align: center;
 
@@ -184,7 +216,7 @@ nav a:hover::after {
     background:
         radial-gradient(
             circle at center,
-            rgba(255, 183, 3, 0.12),
+            rgba(255, 183, 3, 0.13),
             transparent 45%
         ),
         linear-gradient(
@@ -194,60 +226,107 @@ nav a:hover::after {
         );
 }
 
-.hero h2 {
-    max-width: 750px;
+.hero-content {
+    width: 100%;
+    max-width: 850px;
 
-    font-size: clamp(34px, 6vw, 58px);
-    line-height: 1.1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-badge {
+    display: inline-block;
+
+    margin-bottom: 18px;
+
+    padding: 6px 13px;
+
+    border: 1px solid rgba(255, 183, 3, 0.35);
+
+    border-radius: 999px;
+
+    background: rgba(255, 183, 3, 0.08);
+
+    color: #ffd166;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    letter-spacing: 0.5px;
+}
+
+.hero h2 {
+    max-width: 800px;
 
     color: #ffb703;
 
-    margin-bottom: 16px;
+    font-size: clamp(38px, 5vw, 62px);
+
+    line-height: 1.08;
+
+    margin-bottom: 18px;
 }
 
 .hero p {
-    max-width: 580px;
+    max-width: 600px;
 
-    color: #ccc;
+    color: #ddd;
 
-    font-size: 18px;
+    font-size: 19px;
 
-    margin-bottom: 26px;
+    margin-bottom: 28px;
 }
 
 
 /* ====================
-   BUTTONS
+   GENERAL BUTTONS
 ==================== */
 
 button {
     border: none;
-    border-radius: 9px;
+    border-radius: 10px;
 
-    padding: 11px 20px;
+    padding: 11px 22px;
 
     background: #ffb703;
+
     color: #111;
 
     cursor: pointer;
 
+    font-family: inherit;
+
     font-size: 15px;
     font-weight: 800;
 
-    transition: 0.2s;
+    transition:
+        transform 0.2s,
+        background 0.2s,
+        box-shadow 0.2s;
 }
 
 button:hover {
     background: #ffd166;
 
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 
     box-shadow:
-        0 6px 15px rgba(255, 183, 3, 0.18);
+        0 7px 18px rgba(255, 183, 3, 0.18);
 }
 
 button:active {
     transform: translateY(0);
+}
+
+button:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
 }
 
 
@@ -256,7 +335,7 @@ button:active {
 ==================== */
 
 .menu {
-    padding: 65px 6%;
+    padding: 70px 5%;
 
     background: #151515;
 }
@@ -266,25 +345,26 @@ button:active {
 
     color: #ffb703;
 
-    font-size: 36px;
+    font-size: 38px;
 
-    margin-bottom: 35px;
+    margin-bottom: 38px;
 }
 
 .products {
+    width: 100%;
+    max-width: 1100px;
+
+    margin: auto;
+
     display: grid;
 
     grid-template-columns:
         repeat(
             auto-fit,
-            minmax(245px, 1fr)
+            minmax(250px, 1fr)
         );
 
-    gap: 22px;
-
-    max-width: 1100px;
-
-    margin: auto;
+    gap: 24px;
 }
 
 
@@ -293,12 +373,14 @@ button:active {
 ==================== */
 
 .product {
+    min-width: 0;
+
     display: flex;
     flex-direction: column;
 
     overflow: hidden;
 
-    padding: 14px;
+    padding: 15px;
 
     background:
         linear-gradient(
@@ -307,49 +389,61 @@ button:active {
             #202020
         );
 
-    border: 1px solid #383838;
-    border-radius: 15px;
+    border: 1px solid #3a3a3a;
+
+    border-radius: 16px;
 
     box-shadow:
-        0 8px 22px rgba(0, 0, 0, 0.25);
+        0 8px 25px rgba(0, 0, 0, 0.25);
 
-    transition: 0.25s;
+    transition:
+        transform 0.25s,
+        border-color 0.25s,
+        box-shadow 0.25s;
 }
 
 .product:hover {
-    transform: translateY(-4px);
+    transform: translateY(-5px);
 
     border-color: #ffb703;
+
+    box-shadow:
+        0 14px 30px rgba(0, 0, 0, 0.35);
 }
 
 .product img {
     width: 100%;
-    height: 195px;
+    height: 205px;
+
+    display: block;
 
     object-fit: cover;
 
-    border-radius: 11px;
+    border-radius: 12px;
 
-    margin-bottom: 14px;
+    margin-bottom: 15px;
 }
 
 .product h3 {
     color: #ffb703;
 
-    font-size: 20px;
+    font-size: 21px;
 
-    margin-bottom: 6px;
+    line-height: 1.3;
+
+    margin-bottom: 7px;
 }
 
 .product p {
+    min-height: 52px;
+
     color: #ccc;
 
     font-size: 14px;
-    line-height: 1.6;
 
-    min-height: 48px;
+    line-height: 1.65;
 
-    margin-bottom: 12px;
+    margin-bottom: 13px;
 }
 
 .product span {
@@ -359,11 +453,14 @@ button:active {
     font-weight: 900;
 
     margin-top: auto;
+
     margin-bottom: 13px;
 }
 
 .product button {
     width: 100%;
+
+    min-height: 43px;
 }
 
 
@@ -372,7 +469,7 @@ button:active {
 ==================== */
 
 .cart {
-    padding: 65px 20px;
+    padding: 70px 20px;
 
     text-align: center;
 
@@ -382,16 +479,28 @@ button:active {
 .cart h2 {
     color: #ffb703;
 
-    font-size: 34px;
+    font-size: 36px;
 
-    margin-bottom: 25px;
+    margin-bottom: 28px;
 }
 
 #cartItems {
     width: 100%;
-    max-width: 580px;
+    max-width: 600px;
 
     margin: auto;
+}
+
+.cart > h3 {
+    margin-top: 22px;
+
+    color: #ddd;
+
+    font-size: 20px;
+}
+
+#cartTotal {
+    color: #ffb703;
 }
 
 
@@ -404,7 +513,7 @@ button:active {
 
     padding: 18px;
 
-    margin-bottom: 13px;
+    margin-bottom: 14px;
 
     background:
         linear-gradient(
@@ -413,11 +522,12 @@ button:active {
             #202020
         );
 
-    border: 1px solid #383838;
-    border-radius: 13px;
+    border: 1px solid #3a3a3a;
+
+    border-radius: 14px;
 
     box-shadow:
-        0 6px 18px rgba(0, 0, 0, 0.22);
+        0 7px 20px rgba(0, 0, 0, 0.25);
 }
 
 .cart-item h3 {
@@ -445,18 +555,20 @@ button:active {
     align-items: center;
     justify-content: center;
 
-    gap: 14px;
+    gap: 12px;
 
     margin: 15px 0;
 }
 
 .quantity-controls span {
-    min-width: 30px;
+    min-width: 32px;
 
     color: #fff;
 
     font-size: 18px;
     font-weight: bold;
+
+    text-align: center;
 }
 
 .quantity-controls button {
@@ -497,7 +609,7 @@ button:active {
 ==================== */
 
 #clearCart {
-    margin-top: 20px;
+    margin-top: 22px;
 
     background: #333;
 
@@ -514,7 +626,7 @@ button:active {
 ==================== */
 
 .checkout {
-    padding: 65px 20px;
+    padding: 70px 20px;
 
     text-align: center;
 
@@ -524,14 +636,14 @@ button:active {
 .checkout h2 {
     color: #ffb703;
 
-    font-size: 36px;
+    font-size: 38px;
 
-    margin-bottom: 28px;
+    margin-bottom: 30px;
 }
 
 #checkoutForm {
     width: 100%;
-    max-width: 530px;
+    max-width: 540px;
 
     margin: auto;
 
@@ -544,6 +656,8 @@ button:active {
 #checkoutForm input,
 #checkoutForm textarea {
     width: 100%;
+
+    min-width: 0;
 
     padding: 13px 15px;
 
@@ -560,6 +674,10 @@ button:active {
     font-family: inherit;
 
     font-size: 15px;
+
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
 }
 
 #checkoutForm input:focus,
@@ -567,7 +685,7 @@ button:active {
     border-color: #ffb703;
 
     box-shadow:
-        0 0 0 2px rgba(255, 183, 3, 0.1);
+        0 0 0 3px rgba(255, 183, 3, 0.08);
 }
 
 #checkoutForm textarea {
@@ -582,11 +700,63 @@ button:active {
 }
 
 #placeOrderBtn {
+    min-height: 45px;
+
     margin-top: 3px;
 
-    padding: 13px;
+    font-size: 15px;
+}
 
-    font-size: 16px;
+
+/* ====================
+   CUSTOMER STATUS
+==================== */
+
+.customer-status {
+    margin-top: 0;
+
+    margin-bottom: 0;
+
+    padding: 9px 12px;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    text-align: left;
+}
+
+.customer-status.success {
+    display: block;
+
+    background: #064e3b;
+
+    color: #a7f3d0;
+}
+
+.customer-status.new {
+    display: block;
+
+    background: #1e3a8a;
+
+    color: #bfdbfe;
+}
+
+.customer-status.error {
+    display: block;
+
+    background: #7f1d1d;
+
+    color: #fecaca;
+}
+
+input[readonly],
+textarea[readonly] {
+    opacity: 0.65;
+
+    cursor: not-allowed;
 }
 
 
@@ -596,7 +766,7 @@ button:active {
 
 #orderMessage {
     width: 100%;
-    max-width: 530px;
+    max-width: 540px;
 
     margin: 25px auto 0;
 
@@ -614,7 +784,7 @@ button:active {
     border-radius: 14px;
 
     box-shadow:
-        0 8px 22px rgba(0, 0, 0, 0.25);
+        0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
 #orderMessage h2 {
@@ -622,7 +792,7 @@ button:active {
 
     font-size: 26px;
 
-    margin-bottom: 13px;
+    margin-bottom: 12px;
 }
 
 #orderMessage h3 {
@@ -646,19 +816,7 @@ button:active {
 }
 
 #orderMessage button {
-    margin: 6px 4px;
-}
-
-#orderMessage button:first-of-type {
-    background: #25d366;
-
-    color: #fff;
-}
-
-#orderMessage button:last-of-type {
-    background: #444;
-
-    color: #fff;
+    margin: 7px 4px;
 }
 
 
@@ -667,7 +825,7 @@ button:active {
 ==================== */
 
 .contact {
-    padding: 65px 20px;
+    padding: 70px 20px;
 
     text-align: center;
 
@@ -677,19 +835,20 @@ button:active {
 .contact h2 {
     color: #ffb703;
 
-    font-size: 34px;
+    font-size: 36px;
 
-    margin-bottom: 16px;
+    margin-bottom: 17px;
 }
 
 .contact > p {
     color: #ccc;
 
-    margin-bottom: 20px;
+    margin-bottom: 22px;
 }
 
 .contact-info {
-    max-width: 480px;
+    width: 100%;
+    max-width: 500px;
 
     margin: auto;
 
@@ -699,13 +858,15 @@ button:active {
 
     border: 1px solid #333;
 
-    border-radius: 13px;
+    border-radius: 14px;
 }
 
 .contact-info p {
     color: #ddd;
 
     margin: 9px 0;
+
+    font-size: 15px;
 }
 
 
@@ -734,20 +895,20 @@ footer h3 {
 footer p {
     color: #888;
 
-    margin: 4px 0;
-
     font-size: 14px;
+
+    margin: 4px 0;
 }
 
 
-/* ====================
+/* ==========================================================
    TABLET
-==================== */
+========================================================== */
 
 @media (max-width: 768px) {
 
     header {
-        position: relative;
+        position: sticky;
 
         flex-wrap: wrap;
 
@@ -755,25 +916,25 @@ footer p {
 
         gap: 10px;
 
-        padding: 13px 16px;
+        padding: 11px 18px;
     }
 
     .logo {
-        width: 100%;
+        width: auto;
 
-        text-align: center;
-
-        font-size: 24px;
+        font-size: 23px;
     }
 
     nav {
-        order: 2;
+        order: 3;
 
         width: 100%;
 
         justify-content: center;
 
-        gap: 16px;
+        gap: 22px;
+
+        padding-top: 2px;
     }
 
     nav a {
@@ -781,41 +942,200 @@ footer p {
     }
 
     .cart-button {
-        order: 3;
+        order: 2;
 
-        font-size: 13px;
-        padding: 7px 11px;
+        min-width: 82px;
+
+        padding: 8px 12px;
     }
 
     .hero {
-        min-height: 400px;
+        min-height: 440px;
 
-        padding: 50px 18px;
+        padding: 55px 18px;
     }
 
     .hero h2 {
-        font-size: 34px;
-
-        max-width: 360px;
+        font-size: 38px;
     }
 
     .hero p {
-        font-size: 16px;
-
-        max-width: 350px;
-
-        margin-bottom: 22px;
+        font-size: 17px;
     }
 
     .menu {
-        padding: 50px 15px;
+        padding: 55px 18px;
     }
 
     .menu > h2,
     .cart h2,
     .checkout h2,
     .contact h2 {
-        font-size: 30px;
+        font-size: 32px;
+    }
+
+    .products {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 16px;
+
+        max-width: 700px;
+    }
+
+    .product {
+        padding: 12px;
+    }
+
+    .product img {
+        height: 185px;
+    }
+
+    .product h3 {
+        font-size: 19px;
+    }
+
+    .product p {
+        font-size: 13px;
+    }
+
+    .product span {
+        font-size: 19px;
+    }
+
+    .cart {
+        padding: 55px 15px;
+    }
+
+    .checkout {
+        padding: 55px 15px;
+    }
+
+    #orderMessage {
+        padding: 20px 16px;
+    }
+
+}
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width: 560px) {
+
+    header {
+        min-height: auto;
+
+        display: grid;
+
+        grid-template-columns: 1fr auto;
+
+        grid-template-areas:
+            "logo cart"
+            "nav nav";
+
+        gap: 9px 12px;
+
+        padding: 11px 15px;
+    }
+
+    .logo {
+        grid-area: logo;
+
+        width: auto;
+
+        justify-self: start;
+
+        font-size: 21px;
+    }
+
+    nav {
+        grid-area: nav;
+
+        width: 100%;
+
+        justify-content: center;
+
+        gap: 25px;
+
+        padding-top: 3px;
+    }
+
+    nav a {
+        font-size: 13px;
+    }
+
+    .cart-button {
+        grid-area: cart;
+
+        justify-self: end;
+
+        min-width: 75px;
+
+        padding: 7px 10px;
+
+        font-size: 13px;
+    }
+
+    #cartCount {
+        top: -6px;
+        right: -6px;
+
+        min-width: 19px;
+        height: 19px;
+
+        font-size: 10px;
+    }
+
+    .hero {
+        min-height: 390px;
+
+        padding: 45px 16px;
+    }
+
+    .hero-badge {
+        font-size: 11px;
+
+        padding: 5px 10px;
+
+        margin-bottom: 13px;
+    }
+
+    .hero h2 {
+        max-width: 350px;
+
+        font-size: 31px;
+
+        line-height: 1.12;
+
+        margin-bottom: 13px;
+    }
+
+    .hero p {
+        max-width: 320px;
+
+        font-size: 15px;
+
+        margin-bottom: 22px;
+    }
+
+    button {
+        padding: 10px 18px;
+
+        font-size: 14px;
+
+        border-radius: 9px;
+    }
+
+    .menu {
+        padding: 48px 14px;
+    }
+
+    .menu > h2,
+    .cart h2,
+    .checkout h2,
+    .contact h2 {
+        font-size: 28px;
 
         margin-bottom: 25px;
     }
@@ -823,15 +1143,15 @@ footer p {
     .products {
         grid-template-columns: 1fr;
 
-        max-width: 390px;
-
         gap: 16px;
+
+        max-width: 390px;
     }
 
     .product {
         padding: 12px;
 
-        border-radius: 13px;
+        border-radius: 14px;
     }
 
     .product img {
@@ -843,21 +1163,29 @@ footer p {
     }
 
     .product h3 {
-        font-size: 19px;
+        font-size: 18px;
     }
 
     .product p {
-        font-size: 14px;
-
         min-height: auto;
+
+        font-size: 13px;
+
+        margin-bottom: 10px;
     }
 
     .product span {
         font-size: 19px;
+
+        margin-bottom: 11px;
+    }
+
+    .product button {
+        min-height: 41px;
     }
 
     .cart {
-        padding: 50px 13px;
+        padding: 48px 12px;
     }
 
     #cartItems {
@@ -867,11 +1195,28 @@ footer p {
     .cart-item {
         padding: 15px 12px;
 
-        margin-bottom: 11px;
+        border-radius: 12px;
+    }
+
+    .quantity-controls {
+        gap: 10px;
+
+        margin: 12px 0;
+    }
+
+    .quantity-controls button {
+        width: 34px;
+        height: 34px;
+
+        font-size: 17px;
+    }
+
+    #clearCart {
+        margin-top: 18px;
     }
 
     .checkout {
-        padding: 50px 13px;
+        padding: 48px 12px;
     }
 
     #checkoutForm {
@@ -884,13 +1229,33 @@ footer p {
     #checkoutForm textarea {
         padding: 12px 13px;
 
-        font-size: 15px;
+        font-size: 14px;
+
+        border-radius: 8px;
+    }
+
+    #checkoutForm textarea {
+        min-height: 105px;
+    }
+
+    .customer-status {
+        font-size: 12px;
+
+        padding: 8px 10px;
+    }
+
+    #placeOrderBtn {
+        min-height: 42px;
+
+        font-size: 14px;
     }
 
     #orderMessage {
         max-width: 390px;
 
         padding: 17px 13px;
+
+        border-radius: 12px;
 
         margin-top: 20px;
     }
@@ -902,392 +1267,59 @@ footer p {
     }
 
     .contact {
-        padding: 50px 15px;
-    }
-}
-
-
-/* ====================
-   SMALL PHONES
-==================== */
-
-@media (max-width: 420px) {
-
-    header {
-        padding: 12px;
-    }
-
-    .logo {
-        font-size: 22px;
-    }
-
-    nav {
-        gap: 11px;
-    }
-
-    nav a {
-        font-size: 13px;
-    }
-
-    .cart-button {
-        padding: 7px 10px;
-
-        font-size: 12px;
-    }
-
-    #cartCount {
-        min-width: 18px;
-        height: 18px;
-
-        font-size: 10px;
-
-        top: -6px;
-        right: -6px;
-    }
-
-    .hero {
-        min-height: 380px;
-
-        padding: 45px 15px;
-    }
-
-    .hero h2 {
-        font-size: 30px;
-
-        max-width: 330px;
-    }
-
-    .hero p {
-        font-size: 15px;
-
-        max-width: 320px;
-    }
-
-    .hero button {
-        padding: 10px 17px;
-
-        font-size: 14px;
-    }
-
-    .menu,
-    .cart,
-    .checkout,
-    .contact {
-        padding-left: 12px;
-        padding-right: 12px;
-    }
-
-    .menu > h2,
-    .cart h2,
-    .checkout h2,
-    .contact h2 {
-        font-size: 27px;
-    }
-
-    .products {
-        max-width: 100%;
-
-        gap: 14px;
-    }
-
-    .product {
-        padding: 11px;
-    }
-
-    .product img {
-        height: 175px;
-    }
-
-    .product h3 {
-        font-size: 18px;
-    }
-
-    .product p {
-        font-size: 13px;
-
-        line-height: 1.5;
-    }
-
-    .product span {
-        font-size: 18px;
-    }
-
-    .product button {
-        padding: 10px;
-
-        font-size: 14px;
-    }
-
-    .cart-item {
-        padding: 13px 10px;
-    }
-
-    .quantity-controls {
-        gap: 11px;
-
-        margin: 12px 0;
-    }
-
-    .quantity-controls button {
-        width: 34px;
-        height: 34px;
-
-        font-size: 17px;
-    }
-
-    #checkoutForm input,
-    #checkoutForm textarea {
-        padding: 11px 12px;
-
-        font-size: 14px;
-    }
-
-    #checkoutForm textarea {
-        min-height: 105px;
-    }
-
-    #placeOrderBtn {
-        padding: 12px;
-
-        font-size: 15px;
-    }
-
-    #orderMessage {
-        padding: 15px 11px;
-    }
-}
-
-
-/* ====================
-   VERY SMALL PHONES
-==================== */
-
-@media (max-width: 350px) {
-
-    .logo {
-        font-size: 20px;
-    }
-
-    nav {
-        gap: 8px;
-    }
-
-    nav a {
-        font-size: 12px;
-    }
-
-    .hero h2 {
-        font-size: 27px;
-    }
-
-    .hero p {
-        font-size: 14px;
-    }
-
-    .menu > h2,
-    .cart h2,
-    .checkout h2,
-    .contact h2 {
-        font-size: 25px;
-    }
-
-    .product img {
-        height: 155px;
-    }
-}
-
-/* =========================
-   MOBILE ONLY IMPROVEMENTS
-   Desktop stays unchanged
-========================= */
-
-@media (max-width: 768px) {
-
-    body {
-        overflow-x: hidden;
-    }
-
-    header {
-        padding: 12px 15px;
-        gap: 10px;
-    }
-
-    .logo {
-        font-size: 23px;
-    }
-
-    nav {
-        gap: 12px;
-    }
-
-    nav a {
-        font-size: 14px;
-    }
-
-    .cart-button {
-        padding: 8px 12px;
-        font-size: 14px;
-    }
-
-    .hero {
-        min-height: 400px;
-        padding: 50px 15px;
-    }
-
-    .hero h2 {
-        font-size: 32px;
-        max-width: 350px;
-    }
-
-    .hero p {
-        font-size: 16px;
-        max-width: 340px;
-        margin-bottom: 25px;
-    }
-
-    /* Buttons on mobile only */
-    .hero button,
-    .product button,
-    #placeOrderBtn,
-    #clearCart {
-        padding: 10px 16px;
-        font-size: 15px;
-        border-radius: 9px;
-    }
-
-    .menu {
-        padding: 50px 15px;
-    }
-
-    .menu > h2,
-    .cart h2,
-    .checkout h2,
-    .contact h2 {
-        font-size: 29px;
-        margin-bottom: 30px;
-    }
-
-    .products {
-        grid-template-columns: 1fr;
-        gap: 18px;
-        max-width: 380px;
-    }
-
-    .product {
-        padding: 12px;
-        border-radius: 14px;
-    }
-
-    .product img {
-        height: 185px;
-        margin-bottom: 12px;
-        border-radius: 10px;
-    }
-
-    .product h3 {
-        font-size: 19px;
-    }
-
-    .product p {
-        font-size: 14px;
-        min-height: auto;
-        margin-bottom: 10px;
-    }
-
-    .product span {
-        font-size: 19px;
-        margin-bottom: 12px;
-    }
-
-    .cart {
-        padding: 50px 12px;
-    }
-
-    .cart-item {
-        padding: 15px 12px;
-        border-radius: 13px;
-    }
-
-    .quantity-controls {
-        gap: 12px;
-        margin: 14px 0;
-    }
-
-    .quantity-controls button {
-        width: 36px;
-        height: 36px;
-        font-size: 18px;
-    }
-
-    .checkout {
-        padding: 50px 12px;
-    }
-
-    #checkoutForm {
-        gap: 12px;
-    }
-
-    #checkoutForm input,
-    #checkoutForm textarea {
-        padding: 13px 14px;
-        font-size: 15px;
-    }
-
-    #checkoutForm textarea {
-        min-height: 110px;
-    }
-
-    #orderMessage {
-        padding: 18px 14px;
-        margin-top: 22px;
-        border-radius: 13px;
-    }
-
-    #orderMessage button {
-        width: 100%;
-        margin: 5px 0;
-        padding: 10px 14px;
-        font-size: 14px;
-    }
-
-    .contact {
-        padding: 50px 15px;
+        padding: 48px 12px;
     }
 
     .contact-info {
-        padding: 16px;
+        max-width: 390px;
+
+        padding: 15px;
+    }
+
+    .contact-info p {
+        font-size: 13px;
     }
 
     footer {
-        padding: 28px 15px;
+        padding: 25px 15px;
     }
+
 }
 
 
-/* =========================
+/* ==========================================================
    VERY SMALL PHONES
-========================= */
+========================================================== */
 
-@media (max-width: 420px) {
+@media (max-width: 380px) {
 
     header {
         padding: 10px 12px;
     }
 
     .logo {
-        font-size: 21px;
+        font-size: 19px;
     }
 
     nav {
-        gap: 9px;
+        gap: 18px;
     }
 
     nav a {
-        font-size: 13px;
+        font-size: 12px;
+    }
+
+    .cart-button {
+        min-width: 70px;
+
+        padding: 6px 8px;
+
+        font-size: 12px;
     }
 
     .hero {
         min-height: 370px;
+
         padding: 40px 12px;
     }
 
@@ -1299,23 +1331,80 @@ footer p {
         font-size: 14px;
     }
 
-    .products {
-        gap: 15px;
+    .menu,
+    .cart,
+    .checkout,
+    .contact {
+        padding-left: 10px;
+        padding-right: 10px;
     }
 
     .product img {
-        height: 170px;
+        height: 175px;
     }
 
-    .product h3 {
-        font-size: 18px;
+    .product {
+        padding: 10px;
     }
 
-    .product p {
-        font-size: 13px;
+    .cart-item {
+        padding: 13px 10px;
+    }
+}
+
+
+/* ==========================================================
+   TOUCH DEVICES
+   Prevent hover effects from making mobile feel strange
+========================================================== */
+
+@media (hover: none) {
+
+    .product:hover {
+        transform: none;
+
+        border-color: #3a3a3a;
     }
 
-    .product span {
-        font-size: 18px;
+    .cart-button:hover {
+        transform: none;
+
+        box-shadow: none;
     }
+
+    button:hover {
+        transform: none;
+
+        box-shadow: none;
+    }
+
+}
+
+
+/* ==========================================================
+   ACCESSIBILITY
+========================================================== */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid #ffb703;
+
+    outline-offset: 2px;
+}
+
+
+/* ==========================================================
+   PREVENT HORIZONTAL OVERFLOW
+========================================================== */
+
+img {
+    max-width: 100%;
+}
+
+input,
+textarea,
+button {
+    max-width: 100%;
 }
