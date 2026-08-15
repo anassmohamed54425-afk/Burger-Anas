@@ -1,8 +1,3 @@
-/* ==========================================================
-   BURGER ANAS - RESPONSIVE STYLE
-   Desktop + Tablet + Mobile
-========================================================== */
-
 /* ====================
    RESET
 ==================== */
@@ -36,44 +31,43 @@ header {
     top: 0;
     z-index: 1000;
 
-    min-height: 70px;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
 
     gap: 25px;
 
-    padding: 12px 5%;
+    padding: 16px 7%;
 
-    background: rgba(17, 17, 17, 0.96);
+    background: rgba(17, 17, 17, 0.97);
 
     border-bottom: 1px solid #333;
 
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
 }
 
+
+/* ====================
+   LOGO
+==================== */
+
 .logo {
     display: flex;
     align-items: center;
-
     gap: 8px;
 
     color: #ffb703;
 
     text-decoration: none;
 
-    font-size: 25px;
+    font-size: 28px;
     font-weight: 900;
 
     white-space: nowrap;
-
-    transition: 0.2s;
 }
 
 .logo:hover {
     color: #ffd166;
-    transform: translateY(-1px);
 }
 
 
@@ -85,22 +79,20 @@ nav {
     display: flex;
     align-items: center;
 
-    gap: 28px;
+    gap: 25px;
 }
 
 nav a {
     position: relative;
 
-    color: #fff;
+    color: white;
 
     text-decoration: none;
 
-    font-size: 15px;
+    font-size: 16px;
     font-weight: bold;
 
-    padding: 6px 0;
-
-    transition: 0.25s;
+    transition: 0.3s;
 }
 
 nav a:hover {
@@ -113,14 +105,14 @@ nav a::after {
     position: absolute;
 
     left: 0;
-    bottom: 0;
+    bottom: -6px;
 
     width: 0;
     height: 2px;
 
     background: #ffb703;
 
-    transition: 0.25s;
+    transition: 0.3s;
 }
 
 nav a:hover::after {
@@ -141,23 +133,22 @@ nav a:hover::after {
 
     gap: 7px;
 
-    min-width: 90px;
-
     padding: 9px 14px;
 
     background: #242424;
 
     border: 1px solid #444;
+
     border-radius: 10px;
 
-    color: #fff;
+    color: white;
 
     text-decoration: none;
 
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bold;
 
-    transition: 0.25s;
+    transition: 0.3s;
 }
 
 .cart-button:hover {
@@ -166,18 +157,16 @@ nav a:hover::after {
     border-color: #ffb703;
 
     transform: translateY(-2px);
-
-    box-shadow: 0 6px 15px rgba(255, 183, 3, 0.12);
 }
 
 #cartCount {
     position: absolute;
 
-    top: -7px;
-    right: -7px;
+    top: -8px;
+    right: -8px;
 
-    min-width: 21px;
-    height: 21px;
+    min-width: 22px;
+    height: 22px;
 
     display: flex;
     align-items: center;
@@ -187,13 +176,13 @@ nav a:hover::after {
 
     background: #e63946;
 
-    color: #fff;
+    color: white;
 
     border: 2px solid #111;
 
     border-radius: 50%;
 
-    font-size: 11px;
+    font-size: 12px;
     font-weight: bold;
 }
 
@@ -203,7 +192,7 @@ nav a:hover::after {
 ==================== */
 
 .hero {
-    min-height: 500px;
+    min-height: 520px;
 
     display: flex;
     align-items: center;
@@ -211,12 +200,12 @@ nav a:hover::after {
 
     text-align: center;
 
-    padding: 70px 20px;
+    padding: 80px 20px;
 
     background:
         radial-gradient(
             circle at center,
-            rgba(255, 183, 3, 0.13),
+            rgba(255, 183, 3, 0.12),
             transparent 45%
         ),
         linear-gradient(
@@ -228,66 +217,52 @@ nav a:hover::after {
 
 .hero-content {
     width: 100%;
-    max-width: 850px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    max-width: 900px;
 }
 
 .hero-badge {
     display: inline-block;
 
-    margin-bottom: 18px;
+    margin-bottom: 12px;
 
-    padding: 6px 13px;
+    color: #ddd;
 
-    border: 1px solid rgba(255, 183, 3, 0.35);
-
-    border-radius: 999px;
-
-    background: rgba(255, 183, 3, 0.08);
-
-    color: #ffd166;
-
-    font-size: 13px;
-    font-weight: 800;
-
-    letter-spacing: 0.5px;
+    font-size: 16px;
 }
 
 .hero h2 {
     max-width: 800px;
 
+    margin: 0 auto 20px;
+
+    font-size: clamp(38px, 6vw, 64px);
+
+    line-height: 1.1;
+
     color: #ffb703;
-
-    font-size: clamp(38px, 5vw, 62px);
-
-    line-height: 1.08;
-
-    margin-bottom: 18px;
 }
 
 .hero p {
     max-width: 600px;
 
+    margin: 0 auto 32px;
+
     color: #ddd;
 
-    font-size: 19px;
-
-    margin-bottom: 28px;
+    font-size: 20px;
 }
 
 
 /* ====================
-   GENERAL BUTTONS
+   BUTTONS
 ==================== */
 
 button {
     border: none;
+
     border-radius: 10px;
 
-    padding: 11px 22px;
+    padding: 12px 24px;
 
     background: #ffb703;
 
@@ -295,9 +270,7 @@ button {
 
     cursor: pointer;
 
-    font-family: inherit;
-
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 800;
 
     transition:
@@ -312,21 +285,11 @@ button:hover {
     transform: translateY(-2px);
 
     box-shadow:
-        0 7px 18px rgba(255, 183, 3, 0.18);
+        0 8px 20px rgba(255, 183, 3, 0.2);
 }
 
 button:active {
     transform: translateY(0);
-}
-
-button:disabled {
-    opacity: 0.6;
-
-    cursor: not-allowed;
-
-    transform: none;
-
-    box-shadow: none;
 }
 
 
@@ -335,7 +298,7 @@ button:disabled {
 ==================== */
 
 .menu {
-    padding: 70px 5%;
+    padding: 80px 7%;
 
     background: #151515;
 }
@@ -345,26 +308,25 @@ button:disabled {
 
     color: #ffb703;
 
-    font-size: 38px;
+    font-size: 40px;
 
-    margin-bottom: 38px;
+    margin-bottom: 45px;
 }
 
 .products {
-    width: 100%;
-    max-width: 1100px;
-
-    margin: auto;
-
     display: grid;
 
     grid-template-columns:
         repeat(
             auto-fit,
-            minmax(250px, 1fr)
+            minmax(260px, 1fr)
         );
 
-    gap: 24px;
+    gap: 30px;
+
+    max-width: 1100px;
+
+    margin: auto;
 }
 
 
@@ -373,14 +335,12 @@ button:disabled {
 ==================== */
 
 .product {
-    min-width: 0;
-
     display: flex;
     flex-direction: column;
 
     overflow: hidden;
 
-    padding: 15px;
+    padding: 16px;
 
     background:
         linear-gradient(
@@ -391,76 +351,66 @@ button:disabled {
 
     border: 1px solid #3a3a3a;
 
-    border-radius: 16px;
+    border-radius: 18px;
 
     box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.25);
+        0 10px 30px rgba(0, 0, 0, 0.3);
 
-    transition:
-        transform 0.25s,
-        border-color 0.25s,
-        box-shadow 0.25s;
+    transition: 0.3s;
 }
 
 .product:hover {
-    transform: translateY(-5px);
+    transform: translateY(-7px);
 
     border-color: #ffb703;
-
-    box-shadow:
-        0 14px 30px rgba(0, 0, 0, 0.35);
 }
 
 .product img {
-    width: 100%;
-    height: 205px;
-
     display: block;
+
+    width: 100%;
+
+    height: 210px;
 
     object-fit: cover;
 
-    border-radius: 12px;
+    border-radius: 13px;
 
-    margin-bottom: 15px;
+    margin-bottom: 18px;
 }
 
 .product h3 {
     color: #ffb703;
 
-    font-size: 21px;
+    font-size: 22px;
 
-    line-height: 1.3;
-
-    margin-bottom: 7px;
+    margin-bottom: 8px;
 }
 
 .product p {
-    min-height: 52px;
-
     color: #ccc;
 
-    font-size: 14px;
+    line-height: 1.7;
 
-    line-height: 1.65;
+    min-height: 55px;
 
-    margin-bottom: 13px;
+    margin-bottom: 15px;
 }
 
 .product span {
-    color: #fff;
+    color: white;
 
-    font-size: 20px;
+    font-size: 22px;
+
     font-weight: 900;
 
     margin-top: auto;
 
-    margin-bottom: 13px;
+    margin-bottom: 16px;
 }
 
 .product button {
     width: 100%;
-
-    min-height: 43px;
 }
 
 
@@ -469,7 +419,7 @@ button:disabled {
 ==================== */
 
 .cart {
-    padding: 70px 20px;
+    padding: 80px 20px;
 
     text-align: center;
 
@@ -479,28 +429,17 @@ button:disabled {
 .cart h2 {
     color: #ffb703;
 
-    font-size: 36px;
+    font-size: 38px;
 
-    margin-bottom: 28px;
+    margin-bottom: 30px;
 }
 
 #cartItems {
     width: 100%;
+
     max-width: 600px;
 
     margin: auto;
-}
-
-.cart > h3 {
-    margin-top: 22px;
-
-    color: #ddd;
-
-    font-size: 20px;
-}
-
-#cartTotal {
-    color: #ffb703;
 }
 
 
@@ -511,9 +450,9 @@ button:disabled {
 .cart-item {
     width: 100%;
 
-    padding: 18px;
+    padding: 22px;
 
-    margin-bottom: 14px;
+    margin-bottom: 16px;
 
     background:
         linear-gradient(
@@ -524,24 +463,24 @@ button:disabled {
 
     border: 1px solid #3a3a3a;
 
-    border-radius: 14px;
+    border-radius: 15px;
 
     box-shadow:
-        0 7px 20px rgba(0, 0, 0, 0.25);
+        0 8px 25px rgba(0, 0, 0, 0.25);
 }
 
 .cart-item h3 {
     color: #ffb703;
 
-    font-size: 19px;
+    font-size: 21px;
 
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 }
 
 .cart-item p {
     color: #ddd;
 
-    margin: 6px 0;
+    margin: 8px 0;
 }
 
 
@@ -555,25 +494,24 @@ button:disabled {
     align-items: center;
     justify-content: center;
 
-    gap: 12px;
+    gap: 18px;
 
-    margin: 15px 0;
+    margin: 18px 0;
 }
 
 .quantity-controls span {
-    min-width: 32px;
+    min-width: 35px;
 
-    color: #fff;
+    color: white;
 
-    font-size: 18px;
+    font-size: 20px;
+
     font-weight: bold;
-
-    text-align: center;
 }
 
 .quantity-controls button {
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
 
     padding: 0;
 
@@ -583,7 +521,7 @@ button:disabled {
 
     border-radius: 50%;
 
-    font-size: 18px;
+    font-size: 20px;
 }
 
 
@@ -594,9 +532,9 @@ button:disabled {
 .cart-item > button:last-child {
     background: #333;
 
-    color: #fff;
+    color: white;
 
-    margin-top: 7px;
+    margin-top: 8px;
 }
 
 .cart-item > button:last-child:hover {
@@ -609,11 +547,11 @@ button:disabled {
 ==================== */
 
 #clearCart {
-    margin-top: 22px;
+    margin-top: 25px;
 
     background: #333;
 
-    color: #fff;
+    color: white;
 }
 
 #clearCart:hover {
@@ -626,7 +564,7 @@ button:disabled {
 ==================== */
 
 .checkout {
-    padding: 70px 20px;
+    padding: 80px 20px;
 
     text-align: center;
 
@@ -636,48 +574,44 @@ button:disabled {
 .checkout h2 {
     color: #ffb703;
 
-    font-size: 38px;
+    font-size: 40px;
 
-    margin-bottom: 30px;
+    margin-bottom: 35px;
 }
 
 #checkoutForm {
     width: 100%;
-    max-width: 540px;
+
+    max-width: 550px;
 
     margin: auto;
 
     display: flex;
+
     flex-direction: column;
 
-    gap: 13px;
+    gap: 16px;
 }
 
 #checkoutForm input,
 #checkoutForm textarea {
     width: 100%;
 
-    min-width: 0;
-
-    padding: 13px 15px;
+    padding: 16px 18px;
 
     background: #242424;
 
-    color: #fff;
+    color: white;
 
     border: 1px solid #444;
 
-    border-radius: 9px;
+    border-radius: 10px;
 
     outline: none;
 
     font-family: inherit;
 
-    font-size: 15px;
-
-    transition:
-        border-color 0.2s,
-        box-shadow 0.2s;
+    font-size: 16px;
 }
 
 #checkoutForm input:focus,
@@ -685,11 +619,11 @@ button:disabled {
     border-color: #ffb703;
 
     box-shadow:
-        0 0 0 3px rgba(255, 183, 3, 0.08);
+        0 0 0 3px rgba(255, 183, 3, 0.1);
 }
 
 #checkoutForm textarea {
-    min-height: 115px;
+    min-height: 130px;
 
     resize: vertical;
 }
@@ -700,11 +634,11 @@ button:disabled {
 }
 
 #placeOrderBtn {
-    min-height: 45px;
+    margin-top: 5px;
 
-    margin-top: 3px;
+    padding: 15px;
 
-    font-size: 15px;
+    font-size: 17px;
 }
 
 
@@ -713,19 +647,17 @@ button:disabled {
 ==================== */
 
 .customer-status {
-    margin-top: 0;
+    margin-top: 8px;
 
-    margin-bottom: 0;
+    margin-bottom: 12px;
 
-    padding: 9px 12px;
+    padding: 10px 14px;
 
     border-radius: 8px;
 
-    font-size: 13px;
+    font-size: 14px;
 
-    line-height: 1.5;
-
-    text-align: left;
+    display: none;
 }
 
 .customer-status.success {
@@ -754,7 +686,7 @@ button:disabled {
 
 input[readonly],
 textarea[readonly] {
-    opacity: 0.65;
+    opacity: 0.75;
 
     cursor: not-allowed;
 }
@@ -766,11 +698,12 @@ textarea[readonly] {
 
 #orderMessage {
     width: 100%;
-    max-width: 540px;
 
-    margin: 25px auto 0;
+    max-width: 550px;
 
-    padding: 22px;
+    margin: 30px auto 0;
+
+    padding: 28px;
 
     background:
         linear-gradient(
@@ -781,30 +714,30 @@ textarea[readonly] {
 
     border: 1px solid #444;
 
-    border-radius: 14px;
+    border-radius: 16px;
 
     box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.3);
+        0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 #orderMessage h2 {
     color: #ffb703;
 
-    font-size: 26px;
+    font-size: 28px;
 
-    margin-bottom: 12px;
+    margin-bottom: 15px;
 }
 
 #orderMessage h3 {
-    color: #fff;
+    color: white;
 
-    margin: 10px 0;
+    margin: 12px 0;
 }
 
 #orderMessage p {
     color: #ddd;
 
-    margin: 7px 0;
+    margin: 9px 0;
 }
 
 #orderMessage hr {
@@ -812,11 +745,23 @@ textarea[readonly] {
 
     border-top: 1px solid #444;
 
-    margin: 15px 0;
+    margin: 18px 0;
 }
 
 #orderMessage button {
-    margin: 7px 4px;
+    margin: 8px 5px;
+}
+
+#orderMessage button:first-of-type {
+    background: #25d366;
+
+    color: white;
+}
+
+#orderMessage button:last-of-type {
+    background: #444;
+
+    color: white;
 }
 
 
@@ -825,7 +770,7 @@ textarea[readonly] {
 ==================== */
 
 .contact {
-    padding: 70px 20px;
+    padding: 80px 20px;
 
     text-align: center;
 
@@ -835,38 +780,35 @@ textarea[readonly] {
 .contact h2 {
     color: #ffb703;
 
-    font-size: 36px;
+    font-size: 38px;
 
-    margin-bottom: 17px;
+    margin-bottom: 20px;
 }
 
 .contact > p {
     color: #ccc;
 
-    margin-bottom: 22px;
+    margin-bottom: 25px;
 }
 
 .contact-info {
-    width: 100%;
     max-width: 500px;
 
     margin: auto;
 
-    padding: 18px;
+    padding: 20px;
 
     background: #202020;
 
     border: 1px solid #333;
 
-    border-radius: 14px;
+    border-radius: 15px;
 }
 
 .contact-info p {
     color: #ddd;
 
-    margin: 9px 0;
-
-    font-size: 15px;
+    margin: 12px 0;
 }
 
 
@@ -875,7 +817,7 @@ textarea[readonly] {
 ==================== */
 
 footer {
-    padding: 30px 20px;
+    padding: 35px 20px;
 
     text-align: center;
 
@@ -887,144 +829,26 @@ footer {
 footer h3 {
     color: #ffb703;
 
-    font-size: 21px;
+    font-size: 22px;
 
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 footer p {
     color: #888;
 
-    font-size: 14px;
-
-    margin: 4px 0;
+    margin: 5px 0;
 }
 
 
-/* ==========================================================
+/* =========================================================
    TABLET
-========================================================== */
+========================================================= */
 
 @media (max-width: 768px) {
 
     header {
         position: sticky;
-
-        flex-wrap: wrap;
-
-        justify-content: center;
-
-        gap: 10px;
-
-        padding: 11px 18px;
-    }
-
-    .logo {
-        width: auto;
-
-        font-size: 23px;
-    }
-
-    nav {
-        order: 3;
-
-        width: 100%;
-
-        justify-content: center;
-
-        gap: 22px;
-
-        padding-top: 2px;
-    }
-
-    nav a {
-        font-size: 14px;
-    }
-
-    .cart-button {
-        order: 2;
-
-        min-width: 82px;
-
-        padding: 8px 12px;
-    }
-
-    .hero {
-        min-height: 440px;
-
-        padding: 55px 18px;
-    }
-
-    .hero h2 {
-        font-size: 38px;
-    }
-
-    .hero p {
-        font-size: 17px;
-    }
-
-    .menu {
-        padding: 55px 18px;
-    }
-
-    .menu > h2,
-    .cart h2,
-    .checkout h2,
-    .contact h2 {
-        font-size: 32px;
-    }
-
-    .products {
-        grid-template-columns: 1fr 1fr;
-
-        gap: 16px;
-
-        max-width: 700px;
-    }
-
-    .product {
-        padding: 12px;
-    }
-
-    .product img {
-        height: 185px;
-    }
-
-    .product h3 {
-        font-size: 19px;
-    }
-
-    .product p {
-        font-size: 13px;
-    }
-
-    .product span {
-        font-size: 19px;
-    }
-
-    .cart {
-        padding: 55px 15px;
-    }
-
-    .checkout {
-        padding: 55px 15px;
-    }
-
-    #orderMessage {
-        padding: 20px 16px;
-    }
-
-}
-
-
-/* ==========================================================
-   MOBILE
-========================================================== */
-
-@media (max-width: 560px) {
-
-    header {
-        min-height: auto;
 
         display: grid;
 
@@ -1034,9 +858,9 @@ footer p {
             "logo cart"
             "nav nav";
 
-        gap: 9px 12px;
+        gap: 12px 15px;
 
-        padding: 11px 15px;
+        padding: 14px 20px;
     }
 
     .logo {
@@ -1044,9 +868,9 @@ footer p {
 
         width: auto;
 
-        justify-self: start;
+        justify-content: flex-start;
 
-        font-size: 21px;
+        font-size: 23px;
     }
 
     nav {
@@ -1056,309 +880,374 @@ footer p {
 
         justify-content: center;
 
-        gap: 25px;
+        gap: 30px;
 
         padding-top: 3px;
     }
 
     nav a {
-        font-size: 13px;
+        font-size: 15px;
     }
 
     .cart-button {
         grid-area: cart;
 
-        justify-self: end;
-
-        min-width: 75px;
-
-        padding: 7px 10px;
-
-        font-size: 13px;
-    }
-
-    #cartCount {
-        top: -6px;
-        right: -6px;
-
-        min-width: 19px;
-        height: 19px;
-
-        font-size: 10px;
-    }
-
-    .hero {
-        min-height: 390px;
-
-        padding: 45px 16px;
-    }
-
-    .hero-badge {
-        font-size: 11px;
-
-        padding: 5px 10px;
-
-        margin-bottom: 13px;
-    }
-
-    .hero h2 {
-        max-width: 350px;
-
-        font-size: 31px;
-
-        line-height: 1.12;
-
-        margin-bottom: 13px;
-    }
-
-    .hero p {
-        max-width: 320px;
-
-        font-size: 15px;
-
-        margin-bottom: 22px;
-    }
-
-    button {
-        padding: 10px 18px;
+        padding: 8px 13px;
 
         font-size: 14px;
 
         border-radius: 9px;
     }
 
-    .menu {
-        padding: 48px 14px;
+    #cartCount {
+        top: -7px;
+
+        right: -7px;
+
+        min-width: 20px;
+
+        height: 20px;
+
+        font-size: 11px;
     }
 
-    .menu > h2,
-    .cart h2,
-    .checkout h2,
-    .contact h2 {
-        font-size: 28px;
 
-        margin-bottom: 25px;
+    /* HERO */
+
+    .hero {
+        min-height: 430px;
+
+        padding: 55px 20px 65px;
+    }
+
+    .hero-badge {
+        font-size: 15px;
+
+        margin-bottom: 10px;
+    }
+
+    .hero h2 {
+        max-width: 650px;
+
+        font-size: 42px;
+
+        line-height: 1.12;
+
+        margin-bottom: 17px;
+    }
+
+    .hero p {
+        font-size: 18px;
+
+        margin-bottom: 28px;
+    }
+
+    .hero button {
+        padding: 13px 25px;
+
+        font-size: 16px;
+    }
+
+
+    /* MENU */
+
+    .menu {
+        padding: 65px 20px;
+    }
+
+    .menu > h2 {
+        font-size: 34px;
+
+        margin-bottom: 32px;
     }
 
     .products {
         grid-template-columns: 1fr;
 
-        gap: 16px;
+        gap: 22px;
 
-        max-width: 390px;
+        max-width: 440px;
     }
 
     .product {
-        padding: 12px;
+        padding: 14px;
 
-        border-radius: 14px;
+        border-radius: 16px;
     }
 
     .product img {
-        height: 190px;
+        height: 230px;
 
-        border-radius: 10px;
+        border-radius: 12px;
 
-        margin-bottom: 12px;
+        margin-bottom: 15px;
     }
 
     .product h3 {
-        font-size: 18px;
+        font-size: 21px;
     }
 
     .product p {
         min-height: auto;
 
-        font-size: 13px;
-
-        margin-bottom: 10px;
+        font-size: 15px;
     }
 
-    .product span {
-        font-size: 19px;
 
-        margin-bottom: 11px;
-    }
-
-    .product button {
-        min-height: 41px;
-    }
+    /* CART */
 
     .cart {
-        padding: 48px 12px;
+        padding: 65px 18px;
+    }
+
+    .cart h2 {
+        font-size: 34px;
+
+        margin-bottom: 25px;
     }
 
     #cartItems {
-        max-width: 390px;
+        max-width: 520px;
     }
 
     .cart-item {
-        padding: 15px 12px;
+        padding: 18px 15px;
 
-        border-radius: 12px;
+        border-radius: 14px;
     }
 
-    .quantity-controls {
-        gap: 10px;
 
-        margin: 12px 0;
-    }
-
-    .quantity-controls button {
-        width: 34px;
-        height: 34px;
-
-        font-size: 17px;
-    }
-
-    #clearCart {
-        margin-top: 18px;
-    }
+    /* CHECKOUT */
 
     .checkout {
-        padding: 48px 12px;
+        padding: 65px 18px;
+    }
+
+    .checkout h2 {
+        font-size: 34px;
+
+        margin-bottom: 28px;
     }
 
     #checkoutForm {
-        max-width: 390px;
+        max-width: 520px;
 
-        gap: 11px;
+        gap: 13px;
     }
 
     #checkoutForm input,
     #checkoutForm textarea {
-        padding: 12px 13px;
+        padding: 14px 15px;
 
-        font-size: 14px;
-
-        border-radius: 8px;
+        font-size: 15px;
     }
 
-    #checkoutForm textarea {
-        min-height: 105px;
-    }
 
-    .customer-status {
-        font-size: 12px;
-
-        padding: 8px 10px;
-    }
-
-    #placeOrderBtn {
-        min-height: 42px;
-
-        font-size: 14px;
-    }
+    /* ORDER */
 
     #orderMessage {
-        max-width: 390px;
+        padding: 22px 18px;
 
-        padding: 17px 13px;
-
-        border-radius: 12px;
-
-        margin-top: 20px;
+        max-width: 520px;
     }
 
     #orderMessage button {
         width: 100%;
 
-        margin: 5px 0;
+        margin: 7px 0;
     }
+
+
+    /* CONTACT */
 
     .contact {
-        padding: 48px 12px;
+        padding: 65px 18px;
     }
 
-    .contact-info {
-        max-width: 390px;
-
-        padding: 15px;
-    }
-
-    .contact-info p {
-        font-size: 13px;
-    }
-
-    footer {
-        padding: 25px 15px;
+    .contact h2 {
+        font-size: 34px;
     }
 
 }
 
 
-/* ==========================================================
-   VERY SMALL PHONES
-========================================================== */
+/* =========================================================
+   MOBILE
+========================================================= */
 
-@media (max-width: 380px) {
+@media (max-width: 600px) {
+
+    body {
+        font-size: 15px;
+    }
+
+
+    /* ====================
+       MOBILE HEADER
+    ==================== */
 
     header {
-        padding: 10px 12px;
+        padding: 12px 14px 11px;
+
+        gap: 10px;
+
+        background: #101010;
+
+        box-shadow:
+            0 4px 18px rgba(0, 0, 0, 0.35);
     }
 
     .logo {
-        font-size: 19px;
+        font-size: 20px;
+
+        gap: 5px;
     }
 
     nav {
-        gap: 18px;
+        gap: 0;
+
+        justify-content: space-around;
+
+        padding-top: 2px;
     }
 
     nav a {
-        font-size: 12px;
+        font-size: 14px;
+
+        padding: 4px 10px;
+    }
+
+    nav a::after {
+        display: none;
+    }
+
+    nav a:hover {
+        color: #ffb703;
     }
 
     .cart-button {
-        min-width: 70px;
+        min-height: 36px;
 
-        padding: 6px 8px;
+        padding: 7px 11px;
 
-        font-size: 12px;
+        gap: 5px;
+
+        font-size: 13px;
+
+        border-radius: 9px;
     }
 
-    .hero {
-        min-height: 370px;
+    #cartCount {
+        top: -6px;
 
-        padding: 40px 12px;
+        right: -6px;
+
+        min-width: 19px;
+
+        height: 19px;
+
+        border-width: 1px;
+
+        font-size: 10px;
+    }
+
+
+    /* ====================
+       MOBILE HERO
+    ==================== */
+
+    .hero {
+        min-height: 390px;
+
+        padding: 45px 18px 55px;
+
+        background:
+            radial-gradient(
+                circle at 50% 45%,
+                rgba(255, 183, 3, 0.09),
+                transparent 50%
+            ),
+            #171717;
+    }
+
+    .hero-content {
+        max-width: 500px;
+    }
+
+    .hero-badge {
+        font-size: 14px;
+
+        margin-bottom: 12px;
     }
 
     .hero h2 {
-        font-size: 28px;
+        max-width: 500px;
+
+        font-size: 34px;
+
+        line-height: 1.15;
+
+        margin-bottom: 16px;
     }
 
     .hero p {
-        font-size: 14px;
+        font-size: 16px;
+
+        margin-bottom: 25px;
+
+        color: #cfcfcf;
     }
 
-    .menu,
-    .cart,
-    .checkout,
-    .contact {
-        padding-left: 10px;
-        padding-right: 10px;
+    .hero button {
+        width: auto;
+
+        min-width: 170px;
+
+        padding: 12px 22px;
+
+        border-radius: 12px;
+
+        font-size: 15px;
     }
 
-    .product img {
-        height: 175px;
+
+    /* ====================
+       MOBILE MENU
+    ==================== */
+
+    .menu {
+        padding: 55px 15px 65px;
     }
+
+    .menu > h2 {
+        font-size: 31px;
+
+        margin-bottom: 28px;
+    }
+
+    .products {
+        width: 100%;
+
+        max-width: 430px;
+
+        gap: 20px;
+    }
+
+
+    /* ====================
+       MOBILE PRODUCT
+    ==================== */
 
     .product {
-        padding: 10px;
+        width: 100%;
+
+        padding: 12px;
+
+        border-radius: 15px;
+
+        box-shadow:
+            0 8px 22px rgba(0, 0, 0, 0.28);
     }
-
-    .cart-item {
-        padding: 13px 10px;
-    }
-}
-
-
-/* ==========================================================
-   TOUCH DEVICES
-   Prevent hover effects from making mobile feel strange
-========================================================== */
-
-@media (hover: none) {
 
     .product:hover {
         transform: none;
@@ -1366,45 +1255,320 @@ footer p {
         border-color: #3a3a3a;
     }
 
-    .cart-button:hover {
-        transform: none;
+    .product img {
+        width: 100%;
 
-        box-shadow: none;
+        height: 205px;
+
+        border-radius: 11px;
+
+        margin-bottom: 14px;
     }
 
-    button:hover {
-        transform: none;
+    .product h3 {
+        font-size: 20px;
 
-        box-shadow: none;
+        margin-bottom: 6px;
+    }
+
+    .product p {
+        font-size: 14px;
+
+        line-height: 1.6;
+
+        margin-bottom: 12px;
+    }
+
+    .product span {
+        font-size: 20px;
+
+        margin-bottom: 13px;
+    }
+
+    .product button {
+        min-height: 44px;
+
+        padding: 10px 15px;
+
+        border-radius: 10px;
+
+        font-size: 14px;
+    }
+
+
+    /* ====================
+       MOBILE CART
+    ==================== */
+
+    .cart {
+        padding: 55px 14px;
+    }
+
+    .cart h2 {
+        font-size: 30px;
+
+        margin-bottom: 24px;
+    }
+
+    .cart h3 {
+        font-size: 17px;
+    }
+
+    #cartItems {
+        max-width: 430px;
+    }
+
+    .cart-item {
+        padding: 16px 13px;
+
+        margin-bottom: 13px;
+
+        border-radius: 13px;
+    }
+
+    .cart-item h3 {
+        font-size: 18px;
+    }
+
+    .cart-item p {
+        font-size: 14px;
+    }
+
+    .quantity-controls {
+        gap: 13px;
+
+        margin: 15px 0;
+    }
+
+    .quantity-controls button {
+        width: 37px;
+
+        height: 37px;
+
+        font-size: 18px;
+    }
+
+    .quantity-controls span {
+        font-size: 18px;
+
+        min-width: 30px;
+    }
+
+    #clearCart {
+        width: auto;
+
+        padding: 10px 20px;
+
+        font-size: 14px;
+    }
+
+
+    /* ====================
+       MOBILE CHECKOUT
+    ==================== */
+
+    .checkout {
+        padding: 55px 14px;
+    }
+
+    .checkout h2 {
+        font-size: 30px;
+
+        margin-bottom: 25px;
+    }
+
+    #checkoutForm {
+        width: 100%;
+
+        max-width: 430px;
+
+        gap: 12px;
+    }
+
+    #checkoutForm input,
+    #checkoutForm textarea {
+        padding: 13px 14px;
+
+        border-radius: 9px;
+
+        font-size: 14px;
+    }
+
+    #checkoutForm textarea {
+        min-height: 115px;
+    }
+
+    #placeOrderBtn {
+        min-height: 45px;
+
+        padding: 11px;
+
+        font-size: 15px;
+    }
+
+    .customer-status {
+        padding: 9px 11px;
+
+        font-size: 12px;
+
+        line-height: 1.5;
+    }
+
+
+    /* ====================
+       MOBILE ORDER MESSAGE
+    ==================== */
+
+    #orderMessage {
+        width: 100%;
+
+        max-width: 430px;
+
+        padding: 20px 15px;
+
+        margin-top: 25px;
+
+        border-radius: 14px;
+    }
+
+    #orderMessage h2 {
+        font-size: 23px;
+    }
+
+    #orderMessage h3 {
+        font-size: 17px;
+    }
+
+    #orderMessage p {
+        font-size: 14px;
+    }
+
+    #orderMessage button {
+        width: 100%;
+
+        min-height: 43px;
+
+        margin: 6px 0;
+
+        font-size: 14px;
+    }
+
+
+    /* ====================
+       MOBILE CONTACT
+    ==================== */
+
+    .contact {
+        padding: 55px 14px;
+    }
+
+    .contact h2 {
+        font-size: 30px;
+
+        margin-bottom: 15px;
+    }
+
+    .contact > p {
+        font-size: 14px;
+
+        margin-bottom: 20px;
+    }
+
+    .contact-info {
+        width: 100%;
+
+        max-width: 430px;
+
+        padding: 16px 14px;
+
+        border-radius: 13px;
+    }
+
+    .contact-info p {
+        font-size: 14px;
+
+        margin: 10px 0;
+    }
+
+
+    /* ====================
+       MOBILE FOOTER
+    ==================== */
+
+    footer {
+        padding: 28px 15px;
+    }
+
+    footer h3 {
+        font-size: 19px;
+    }
+
+    footer p {
+        font-size: 13px;
     }
 
 }
 
 
-/* ==========================================================
-   ACCESSIBILITY
-========================================================== */
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
 
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-textarea:focus-visible {
-    outline: 2px solid #ffb703;
+@media (max-width: 380px) {
 
-    outline-offset: 2px;
-}
+    header {
+        padding: 10px 11px;
+    }
 
+    .logo {
+        font-size: 18px;
+    }
 
-/* ==========================================================
-   PREVENT HORIZONTAL OVERFLOW
-========================================================== */
+    nav a {
+        font-size: 13px;
 
-img {
-    max-width: 100%;
-}
+        padding: 4px 7px;
+    }
 
-input,
-textarea,
-button {
-    max-width: 100%;
+    .cart-button {
+        padding: 6px 9px;
+
+        font-size: 12px;
+    }
+
+    .hero {
+        min-height: 370px;
+
+        padding: 40px 15px 50px;
+    }
+
+    .hero h2 {
+        font-size: 30px;
+    }
+
+    .hero p {
+        font-size: 15px;
+    }
+
+    .hero button {
+        min-width: 155px;
+
+        padding: 11px 18px;
+    }
+
+    .menu > h2,
+    .cart h2,
+    .checkout h2,
+    .contact h2 {
+        font-size: 28px;
+    }
+
+    .product img {
+        height: 185px;
+    }
+
+    .product {
+        padding: 11px;
+    }
+
 }
