@@ -1,302 +1,864 @@
-// ====================
-// CART
-// ====================
+// ==========================================================
+// BURGER ANAS - MAIN SCRIPT
+// CART + CUSTOMER MEMORY + ORDERS + FIREBASE
+// ==========================================================
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+// ==========================================================
+// FIREBASE
+// ==========================================================
+
+const FIREBASE_FIRESTORE_URL =
+    "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+let firebaseFunctions = null;
 
 
-// ====================
-// UPDATE CART COUNT
-// ====================
+async function getFirebaseFunctions() {
 
-function updateCartCount() {
-
-    const cartCount =
-        document.getElementById("cartCount");
-
-    if (!cartCount) {
-        return;
+    if (firebaseFunctions) {
+        return firebaseFunctions;
     }
 
-    let count = 0;
-
-    cart.forEach(function(product) {
-
-        count += Number(product.quantity) || 0;
-
-    });
-
-    cartCount.textContent = count;
-
-}
-
-
-// ====================
-// ADD TO CART
-// ====================
-
-function addToCart(name, price) {
-
-    let existingProduct =
-        cart.find(function(product) {
-
-            return product.name === name;
-
-        });
-
-
-    if (existingProduct) {
-
-        existingProduct.quantity++;
-
-    } else {
-
-        cart.push({
-
-            name: name,
-
-            price: Number(price),
-
-            quantity: 1
-
-        });
-
-    }
-
-
-    saveCart();
-
-    displayCart();
-
-    updateCartCount();
-
-
-    console.log("Added:", name);
-
-}
-
-
-// ====================
-// SAVE CART
-// ====================
-
-function saveCart() {
-
-    localStorage.setItem(
-        "cart",
-        JSON.stringify(cart)
+    firebaseFunctions = await import(
+        FIREBASE_FIRESTORE_URL
     );
 
+    return firebaseFunctions;
 }
 
 
-// ====================
-// DISPLAY CART
-// ====================
+// ==========================================================
+// WAIT FOR FIREBASE
+// ==========================================================
 
-function displayCart() {
+async function waitForFirebaseDB(timeout = 15000) {
 
-    const cartItems =
-        document.getElementById("cartItems");
+    const startTime = Date.now();
 
-    const cartTotal =
-        document.getElementById("cartTotal");
+    while (!window.firebaseDB) {
 
+        if (Date.now() - startTime >= timeout) {
 
-    if (!cartItems || !cartTotal) {
+            throw new Error(
+                "Firebase DB was not initialized."
+            );
 
-        updateCartCount();
+        }
 
-        return;
+        await new Promise(function(resolve) {
 
-    }
+            setTimeout(resolve, 100);
 
-
-    cartItems.innerHTML = "";
-
-    let total = 0;
-
-
-    if (cart.length === 0) {
-
-        cartItems.innerHTML =
-            "<p>Your cart is empty.</p>";
-
-        cartTotal.textContent = "0";
-
-        updateCartCount();
-
-        return;
+        });
 
     }
 
-
-    cart.forEach(function(product, index) {
-
-        const price =
-            Number(product.price) || 0;
-
-        const quantity =
-            Number(product.quantity) || 0;
-
-        const productTotal =
-            price * quantity;
-
-
-        const item =
-            document.createElement("div");
-
-
-        item.className =
-            "cart-item";
-
-
-        item.innerHTML = `
-
-            <h3>
-                ${product.name}
-            </h3>
-
-            <p>
-                Price:
-                ${price} EGP
-            </p>
-
-            <div class="quantity-controls">
-
-                <button
-                    type="button"
-                    onclick="decreaseQuantity(${index})">
-                    -
-                </button>
-
-                <span>
-                    ${quantity}
-                </span>
-
-                <button
-                    type="button"
-                    onclick="increaseQuantity(${index})">
-                    +
-                </button>
-
-            </div>
-
-            <p>
-                Total:
-                ${productTotal} EGP
-            </p>
-
-            <button
-                type="button"
-                onclick="removeFromCart(${index})">
-                Remove
-            </button>
-
-        `;
-
-
-        cartItems.appendChild(item);
-
-
-        total += productTotal;
-
-    });
-
-
-    cartTotal.textContent = total;
-
-
-    // تحديث العداد بعد رسم السلة
-    updateCartCount();
-
+    return window.firebaseDB;
 }
 
 
-// ====================
-// INCREASE QUANTITY
-// ====================
+// ==========================================================
+// GLOBAL VARIABLES
+// ==========================================================
 
-function increaseQuantity(index) {
+let cart = [];
 
-    if (!cart[index]) {
-        return;
-    }
+let existingCustomer = null;
 
-
-    cart[index].quantity++;
+let customerSearchTimer = null;
 
 
-    saveCart();
+// ==========================================================
+// ELEMENTS
+// ==========================================================
 
-    displayCart();
+const cartItems =
+    document.getElementById("cartItems");
 
-    updateCartCount();
+const cartTotal =
+    document.getElementById("cartTotal");
 
-}
-
-
-// ====================
-// DECREASE QUANTITY
-// ====================
-
-function decreaseQuantity(index) {
-
-    if (!cart[index]) {
-        return;
-    }
-
-
-    if (cart[index].quantity > 1) {
-
-        cart[index].quantity--;
-
-    } else {
-
-        cart.splice(index, 1);
-
-    }
-
-
-    saveCart();
-
-    displayCart();
-
-    updateCartCount();
-
-}
-
-
-// ====================
-// REMOVE PRODUCT
-// ====================
-
-function removeFromCart(index) {
-
-    if (!cart[index]) {
-        return;
-    }
-
-
-    cart.splice(index, 1);
-
-
-    saveCart();
-
-    displayCart();
-
-    updateCartCount();
-
-}
-
-
-// ====================
-// CLEAR CART
-// ====================
+const cartCount =
+    document.getElementById("cartCount");
 
 const clearCartButton =
     document.getElementById("clearCart");
 
+const checkoutForm =
+    document.getElementById("checkoutForm");
+
+const customerName =
+    document.getElementById("customerName");
+
+const customerPhone =
+    document.getElementById("customerPhone");
+
+const customerAddress =
+    document.getElementById("customerAddress");
+
+const orderMessage =
+    document.getElementById("orderMessage");
+
+const placeOrderBtn =
+    document.getElementById("placeOrderBtn");
+
+
+// ==========================================================
+// LOAD CART
+// ==========================================================
+
+try {
+
+    const savedCart =
+        localStorage.getItem("cart");
+
+    if (savedCart) {
+
+        const parsedCart =
+            JSON.parse(savedCart);
+
+        if (Array.isArray(parsedCart)) {
+
+            cart = parsedCart;
+
+        }
+
+    }
+
+}
+catch (error) {
+
+    console.error(
+        "Cart loading error:",
+        error
+    );
+
+    cart = [];
+
+}
+
+
+// ==========================================================
+// NORMALIZE PHONE
+// ==========================================================
+
+function normalizePhone(phone) {
+
+    let value =
+        String(phone || "").trim();
+
+
+    const arabicNumbers = {
+
+        "٠": "0",
+        "١": "1",
+        "٢": "2",
+        "٣": "3",
+        "٤": "4",
+        "٥": "5",
+        "٦": "6",
+        "٧": "7",
+        "٨": "8",
+        "٩": "9"
+
+    };
+
+
+    value = value.replace(
+        /[٠-٩]/g,
+        function(number) {
+
+            return arabicNumbers[number];
+
+        }
+    );
+
+
+    value = value.replace(
+        /[\s\-()]/g,
+        ""
+    );
+
+
+    // +20XXXXXXXXXX
+    // -> 01XXXXXXXXX
+
+    if (value.startsWith("+20")) {
+
+        value =
+            "0" +
+            value.substring(3);
+
+    }
+
+
+    // 20XXXXXXXXXX
+    // -> 01XXXXXXXXX
+
+    if (
+        value.startsWith("20") &&
+        value.length === 12
+    ) {
+
+        value =
+            "0" +
+            value.substring(2);
+
+    }
+
+
+    return value;
+
+}
+
+
+// ==========================================================
+// SHOW MESSAGE
+// ==========================================================
+
+function showMessage(
+    message,
+    type = "normal"
+) {
+
+    if (!orderMessage) {
+        return;
+    }
+
+
+    orderMessage.textContent =
+        message;
+
+
+    orderMessage.style.display =
+        "block";
+
+
+    if (type === "success") {
+
+        orderMessage.style.color =
+            "#86efac";
+
+    }
+    else if (type === "error") {
+
+        orderMessage.style.color =
+            "#fca5a5";
+
+    }
+    else {
+
+        orderMessage.style.color =
+            "#ffffff";
+
+    }
+
+}
+
+
+// ==========================================================
+// SHOW ORDER DETAILS
+// ==========================================================
+
+function showOrderDetails(
+    orderNumber,
+    orderId,
+    customer,
+    items,
+    total
+) {
+
+    if (!orderMessage) {
+        return;
+    }
+
+
+    let itemsHTML = "";
+
+
+    items.forEach(function(item) {
+
+        const itemTotal =
+            Number(item.price) *
+            Number(item.quantity);
+
+
+        itemsHTML += `
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    gap:15px;
+                    padding:10px 0;
+                    border-bottom:1px solid rgba(255,255,255,0.15);
+                "
+            >
+
+                <div>
+
+                    <strong>
+                        ${escapeHtml(item.name)}
+                    </strong>
+
+                    <div
+                        style="
+                            margin-top:4px;
+                            opacity:0.8;
+                        "
+                    >
+                        ${item.quantity} × ${item.price} EGP
+                    </div>
+
+                </div>
+
+
+                <strong>
+                    ${itemTotal} EGP
+                </strong>
+
+            </div>
+
+        `;
+
+    });
+
+
+    orderMessage.innerHTML = `
+
+        <div
+            style="
+                margin-top:15px;
+                padding:20px;
+                border-radius:15px;
+                background:rgba(20,30,60,0.75);
+                border:1px solid rgba(255,255,255,0.2);
+                color:white;
+                text-align:left;
+            "
+        >
+
+            <h3
+                style="
+                    margin-top:0;
+                    color:#86efac;
+                    text-align:center;
+                "
+            >
+                ✓ Order placed successfully!
+            </h3>
+
+
+            <div
+                style="
+                    text-align:center;
+                    margin-bottom:18px;
+                    font-size:18px;
+                "
+            >
+
+                <strong>
+                    Order #${escapeHtml(orderNumber)}
+                </strong>
+
+                <br>
+
+                <small>
+                    ${escapeHtml(orderId)}
+                </small>
+
+            </div>
+
+
+            <div
+                style="
+                    margin-bottom:18px;
+                    padding:12px;
+                    background:rgba(255,255,255,0.06);
+                    border-radius:10px;
+                "
+            >
+
+                <div>
+                    <strong>Customer:</strong>
+                    ${escapeHtml(customer.name)}
+                </div>
+
+
+                <div style="margin-top:6px;">
+                    <strong>Phone:</strong>
+                    ${escapeHtml(customer.phone)}
+                </div>
+
+
+                <div style="margin-top:6px;">
+                    <strong>Address:</strong>
+                    ${escapeHtml(customer.address)}
+                </div>
+
+            </div>
+
+
+            <h4
+                style="
+                    margin-bottom:5px;
+                "
+            >
+                Order Details
+            </h4>
+
+
+            <div>
+                ${itemsHTML}
+            </div>
+
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    margin-top:18px;
+                    padding-top:15px;
+                    border-top:2px solid rgba(255,255,255,0.2);
+                    font-size:20px;
+                "
+            >
+
+                <strong>
+                    Total
+                </strong>
+
+
+                <strong
+                    style="color:#ffd21f;"
+                >
+                    ${total} EGP
+                </strong>
+
+            </div>
+
+
+            <div
+                style="
+                    margin-top:15px;
+                    text-align:center;
+                    color:#86efac;
+                "
+            >
+                Thank you for ordering from Burger Anas 🍔
+            </div>
+
+        </div>
+
+    `;
+
+
+    orderMessage.style.display =
+        "block";
+
+}
+
+
+// ==========================================================
+// UPDATE CART COUNT
+// ==========================================================
+
+function updateCartCount() {
+
+    let count = 0;
+
+
+    cart.forEach(function(item) {
+
+        count +=
+            Number(item.quantity) || 0;
+
+    });
+
+
+    if (cartCount) {
+
+        cartCount.textContent =
+            count;
+
+    }
+
+}
+
+
+// ==========================================================
+// SAVE CART
+// ==========================================================
+
+function saveCart() {
+
+    try {
+
+        localStorage.setItem(
+            "cart",
+            JSON.stringify(cart)
+        );
+
+    }
+    catch (error) {
+
+        console.error(
+            "Cart save error:",
+            error
+        );
+
+    }
+
+
+    updateCartCount();
+
+}
+
+
+// ==========================================================
+// ADD TO CART
+// ==========================================================
+
+window.addToCart =
+    function(name, price) {
+
+        const existingItem =
+            cart.find(function(item) {
+
+                return item.name === name;
+
+            });
+
+
+        if (existingItem) {
+
+            existingItem.quantity =
+                Number(existingItem.quantity) + 1;
+
+        }
+        else {
+
+            cart.push({
+
+                name:
+                    String(name),
+
+                price:
+                    Number(price) || 0,
+
+                quantity:
+                    1
+
+            });
+
+        }
+
+
+        saveCart();
+
+        renderCart();
+
+    };
+
+
+// ==========================================================
+// REMOVE FROM CART
+// ==========================================================
+
+window.removeFromCart =
+    function(index) {
+
+        if (
+            index < 0 ||
+            index >= cart.length
+        ) {
+
+            return;
+
+        }
+
+
+        cart.splice(
+            index,
+            1
+        );
+
+
+        saveCart();
+
+        renderCart();
+
+    };
+
+
+// ==========================================================
+// CHANGE QUANTITY
+// ==========================================================
+
+window.changeQuantity =
+    function(index, amount) {
+
+        if (!cart[index]) {
+            return;
+        }
+
+
+        cart[index].quantity =
+            Number(cart[index].quantity) +
+            Number(amount);
+
+
+        if (
+            cart[index].quantity <= 0
+        ) {
+
+            cart.splice(
+                index,
+                1
+            );
+
+        }
+
+
+        saveCart();
+
+        renderCart();
+
+    };
+
+
+// ==========================================================
+// INCREASE
+// ==========================================================
+
+window.increaseQuantity =
+    function(index) {
+
+        window.changeQuantity(
+            index,
+            1
+        );
+
+    };
+
+
+// ==========================================================
+// DECREASE
+// ==========================================================
+
+window.decreaseQuantity =
+    function(index) {
+
+        window.changeQuantity(
+            index,
+            -1
+        );
+
+    };
+
+
+// ==========================================================
+// CALCULATE TOTAL
+// ==========================================================
+
+function calculateCartTotal() {
+
+    let total = 0;
+
+
+    cart.forEach(function(item) {
+
+        const price =
+            Number(item.price) || 0;
+
+
+        const quantity =
+            Number(item.quantity) || 0;
+
+
+        total +=
+            price * quantity;
+
+    });
+
+
+    return total;
+
+}
+
+
+// ==========================================================
+// ESCAPE HTML
+// ==========================================================
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+// ==========================================================
+// RENDER CART
+// ==========================================================
+
+function renderCart() {
+
+    if (!cartItems) {
+
+        updateCartCount();
+
+        return;
+
+    }
+
+
+    cartItems.innerHTML =
+        "";
+
+
+    if (cart.length === 0) {
+
+        cartItems.innerHTML = `
+            <p>
+                Your cart is empty.
+            </p>
+        `;
+
+
+        if (cartTotal) {
+
+            cartTotal.textContent =
+                "0";
+
+        }
+
+
+        updateCartCount();
+
+        return;
+
+    }
+
+
+    cart.forEach(function(item, index) {
+
+        const price =
+            Number(item.price) || 0;
+
+
+        const quantity =
+            Number(item.quantity) || 0;
+
+
+        const itemTotal =
+            price * quantity;
+
+
+        const itemElement =
+            document.createElement("div");
+
+
+        itemElement.className =
+            "cart-item";
+
+
+        itemElement.innerHTML = `
+
+            <div>
+
+                <strong>
+                    ${escapeHtml(item.name)}
+                </strong>
+
+                <div>
+                    ${price} EGP × ${quantity}
+                </div>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    ${itemTotal} EGP
+                </strong>
+
+                <br>
+
+
+                <button
+                    type="button"
+                    onclick="decreaseQuantity(${index})"
+                >
+                    −
+                </button>
+
+
+                <button
+                    type="button"
+                    onclick="increaseQuantity(${index})"
+                >
+                    +
+                </button>
+
+
+                <button
+                    type="button"
+                    onclick="removeFromCart(${index})"
+                >
+                    Remove
+                </button>
+
+            </div>
+
+        `;
+
+
+        cartItems.appendChild(
+            itemElement
+        );
+
+    });
+
+
+    if (cartTotal) {
+
+        cartTotal.textContent =
+            calculateCartTotal();
+
+    }
+
+
+    updateCartCount();
+
+}
+
+
+// ==========================================================
+// CLEAR CART
+// ==========================================================
 
 if (clearCartButton) {
 
@@ -304,26 +866,11 @@ if (clearCartButton) {
         "click",
         function() {
 
-            if (cart.length === 0) {
+            cart = [];
 
-                return;
+            saveCart();
 
-            }
-
-
-            if (confirm("Clear your cart?")) {
-
-                cart = [];
-
-
-                localStorage.removeItem("cart");
-
-
-                displayCart();
-
-                updateCartCount();
-
-            }
+            renderCart();
 
         }
     );
@@ -331,13 +878,748 @@ if (clearCartButton) {
 }
 
 
-// ====================
-// CHECKOUT + FIREBASE
-// ====================
+// ==========================================================
+// LOCK CUSTOMER FIELDS
+// ==========================================================
 
-const checkoutForm =
-    document.getElementById("checkoutForm");
+function lockCustomerFields() {
 
+    if (customerName) {
+
+        customerName.readOnly =
+            true;
+
+        customerName.style.opacity =
+            "0.7";
+
+        customerName.style.cursor =
+            "not-allowed";
+
+    }
+
+
+    if (customerAddress) {
+
+        customerAddress.readOnly =
+            true;
+
+        customerAddress.style.opacity =
+            "0.7";
+
+        customerAddress.style.cursor =
+            "not-allowed";
+
+    }
+
+}
+
+
+// ==========================================================
+// UNLOCK CUSTOMER FIELDS
+// ==========================================================
+
+function unlockCustomerFields() {
+
+    if (customerName) {
+
+        customerName.readOnly =
+            false;
+
+        customerName.style.opacity =
+            "1";
+
+        customerName.style.cursor =
+            "text";
+
+    }
+
+
+    if (customerAddress) {
+
+        customerAddress.readOnly =
+            false;
+
+        customerAddress.style.opacity =
+            "1";
+
+        customerAddress.style.cursor =
+            "text";
+
+    }
+
+}
+
+
+// ==========================================================
+// CUSTOMER FOUND
+// ==========================================================
+
+function showCustomerFound() {
+
+    showMessage(
+        "✓ This phone number belongs to an existing customer. Saved data has been loaded.",
+        "success"
+    );
+
+}
+
+
+// ==========================================================
+// NEW CUSTOMER
+// ==========================================================
+
+function showNewCustomer() {
+
+    showMessage(
+        "New customer. Please enter your name and address.",
+        "normal"
+    );
+
+}
+
+
+// ==========================================================
+// FIND CUSTOMER BY PHONE
+// ==========================================================
+
+async function findCustomerByPhone(phone) {
+
+    const normalizedPhone =
+        normalizePhone(phone);
+
+
+    if (
+        normalizedPhone.length < 10
+    ) {
+
+        existingCustomer =
+            null;
+
+        unlockCustomerFields();
+
+        return;
+
+    }
+
+
+    try {
+
+        const db =
+            await waitForFirebaseDB();
+
+
+        const {
+            collection,
+            query,
+            where,
+            getDocs
+        } =
+            await getFirebaseFunctions();
+
+
+        const customersRef =
+            collection(
+                db,
+                "customers"
+            );
+
+
+        const q =
+            query(
+                customersRef,
+                where(
+                    "normalizedPhone",
+                    "==",
+                    normalizedPhone
+                )
+            );
+
+
+        const snapshot =
+            await getDocs(q);
+
+
+        if (
+            !snapshot.empty
+        ) {
+
+            const customerDoc =
+                snapshot.docs[0];
+
+
+            const data =
+                customerDoc.data();
+
+
+            existingCustomer = {
+
+                id:
+                    customerDoc.id,
+
+                ...data
+
+            };
+
+
+            if (customerName) {
+
+                customerName.value =
+                    data.name ||
+                    data.customerName ||
+                    "";
+
+            }
+
+
+            if (customerAddress) {
+
+                customerAddress.value =
+                    data.address ||
+                    "";
+
+            }
+
+
+            lockCustomerFields();
+
+
+            showCustomerFound();
+
+
+            return;
+
+        }
+
+
+        existingCustomer =
+            null;
+
+
+        unlockCustomerFields();
+
+
+        showNewCustomer();
+
+    }
+    catch (error) {
+
+        console.error(
+            "Customer search error:",
+            error
+        );
+
+    }
+
+}
+
+
+// ==========================================================
+// PHONE INPUT
+// ==========================================================
+
+if (customerPhone) {
+
+    customerPhone.addEventListener(
+        "input",
+        function() {
+
+            clearTimeout(
+                customerSearchTimer
+            );
+
+
+            existingCustomer =
+                null;
+
+
+            unlockCustomerFields();
+
+
+            customerSearchTimer =
+                setTimeout(
+                    function() {
+
+                        findCustomerByPhone(
+                            customerPhone.value
+                        );
+
+                    },
+                    500
+                );
+
+        }
+    );
+
+}
+
+
+// ==========================================================
+// GET OR CREATE CUSTOMER
+// ==========================================================
+
+async function getOrCreateCustomer() {
+
+    const db =
+        await waitForFirebaseDB();
+
+
+    const {
+        collection,
+        query,
+        where,
+        getDocs,
+        doc,
+        getDoc,
+        setDoc,
+        serverTimestamp
+    } =
+        await getFirebaseFunctions();
+
+
+    const name =
+        customerName
+            ? customerName.value.trim()
+            : "";
+
+
+    const phone =
+        customerPhone
+            ? customerPhone.value.trim()
+            : "";
+
+
+    const address =
+        customerAddress
+            ? customerAddress.value.trim()
+            : "";
+
+
+    const normalizedPhone =
+        normalizePhone(phone);
+
+
+    if (!phone) {
+
+        throw new Error(
+            "Please enter your phone number."
+        );
+
+    }
+
+
+    if (
+        normalizedPhone.length < 10
+    ) {
+
+        throw new Error(
+            "Please enter a valid phone number."
+        );
+
+    }
+
+
+    // ======================================================
+    // EXISTING CUSTOMER
+    // ======================================================
+
+    if (existingCustomer) {
+
+        return {
+
+            id:
+                existingCustomer.id,
+
+            name:
+                existingCustomer.name ||
+                existingCustomer.customerName ||
+                "",
+
+            phone:
+                existingCustomer.phone ||
+                phone,
+
+            normalizedPhone:
+                existingCustomer.normalizedPhone ||
+                normalizedPhone,
+
+            address:
+                existingCustomer.address ||
+                ""
+
+        };
+
+    }
+
+
+    // ======================================================
+    // FINAL DUPLICATE CHECK
+    // ======================================================
+
+    const customersRef =
+        collection(
+            db,
+            "customers"
+        );
+
+
+    const q =
+        query(
+            customersRef,
+            where(
+                "normalizedPhone",
+                "==",
+                normalizedPhone
+            )
+        );
+
+
+    const snapshot =
+        await getDocs(q);
+
+
+    if (
+        !snapshot.empty
+    ) {
+
+        const customerDoc =
+            snapshot.docs[0];
+
+
+        const data =
+            customerDoc.data();
+
+
+        existingCustomer = {
+
+            id:
+                customerDoc.id,
+
+            ...data
+
+        };
+
+
+        if (customerName) {
+
+            customerName.value =
+                data.name ||
+                data.customerName ||
+                "";
+
+        }
+
+
+        if (customerAddress) {
+
+            customerAddress.value =
+                data.address ||
+                "";
+
+        }
+
+
+        lockCustomerFields();
+
+
+        return {
+
+            id:
+                customerDoc.id,
+
+            name:
+                data.name ||
+                data.customerName ||
+                "",
+
+            phone:
+                data.phone ||
+                phone,
+
+            normalizedPhone:
+                data.normalizedPhone ||
+                normalizedPhone,
+
+            address:
+                data.address ||
+                ""
+
+        };
+
+    }
+
+
+    // ======================================================
+    // NEW CUSTOMER
+    // ======================================================
+
+    if (!name) {
+
+        throw new Error(
+            "Please enter your name."
+        );
+
+    }
+
+
+    if (!address) {
+
+        throw new Error(
+            "Please enter your address."
+        );
+
+    }
+
+
+    const customerDocRef =
+        doc(
+            db,
+            "customers",
+            normalizedPhone
+        );
+
+
+    const customerDoc =
+        await getDoc(
+            customerDocRef
+        );
+
+
+    if (
+        customerDoc.exists()
+    ) {
+
+        const data =
+            customerDoc.data();
+
+
+        existingCustomer = {
+
+            id:
+                customerDoc.id,
+
+            ...data
+
+        };
+
+
+        if (customerName) {
+
+            customerName.value =
+                data.name ||
+                data.customerName ||
+                "";
+
+        }
+
+
+        if (customerAddress) {
+
+            customerAddress.value =
+                data.address ||
+                "";
+
+        }
+
+
+        lockCustomerFields();
+
+
+        return {
+
+            id:
+                customerDoc.id,
+
+            name:
+                data.name ||
+                data.customerName ||
+                "",
+
+            phone:
+                data.phone ||
+                phone,
+
+            normalizedPhone:
+                data.normalizedPhone ||
+                normalizedPhone,
+
+            address:
+                data.address ||
+                ""
+
+        };
+
+    }
+
+
+    const customerData = {
+
+        name:
+            name,
+
+        phone:
+            phone,
+
+        normalizedPhone:
+            normalizedPhone,
+
+        address:
+            address,
+
+        createdAt:
+            serverTimestamp(),
+
+        updatedAt:
+            serverTimestamp()
+
+    };
+
+
+    await setDoc(
+        customerDocRef,
+        customerData
+    );
+
+
+    existingCustomer = {
+
+        id:
+            normalizedPhone,
+
+        ...customerData
+
+    };
+
+
+    return {
+
+        id:
+            normalizedPhone,
+
+        name:
+            name,
+
+        phone:
+            phone,
+
+        normalizedPhone:
+            normalizedPhone,
+
+        address:
+            address
+
+    };
+
+}
+
+
+// ==========================================================
+// GET NEXT ORDER NUMBER
+// ==========================================================
+
+async function getNextOrderNumber() {
+
+    const db =
+        await waitForFirebaseDB();
+
+
+    const {
+        doc,
+        runTransaction
+    } =
+        await getFirebaseFunctions();
+
+
+    const counterRef =
+        doc(
+            db,
+            "counters",
+            "orders"
+        );
+
+
+    const nextNumber =
+        await runTransaction(
+            db,
+            async function(transaction) {
+
+                const counterSnapshot =
+                    await transaction.get(
+                        counterRef
+                    );
+
+
+                let lastNumber =
+                    0;
+
+
+                if (
+                    counterSnapshot.exists()
+                ) {
+
+                    const data =
+                        counterSnapshot.data();
+
+
+                    lastNumber =
+                        Number(
+                            data.lastNumber
+                        ) || 0;
+
+                }
+
+
+                const newNumber =
+                    lastNumber + 1;
+
+
+                transaction.set(
+                    counterRef,
+                    {
+
+                        lastNumber:
+                            newNumber
+
+                    },
+                    {
+
+                        merge:
+                            true
+
+                    }
+                );
+
+
+                return newNumber;
+
+            }
+        );
+
+
+    return nextNumber;
+
+}
+
+
+// ==========================================================
+// CREATE ORDER ID
+// ==========================================================
+
+function createOrderId(orderNumber) {
+
+    return (
+        "BA-" +
+        String(orderNumber).padStart(
+            6,
+            "0"
+        )
+    );
+
+}
+
+
+// ==========================================================
+// PLACE ORDER
+// ==========================================================
 
 if (checkoutForm) {
 
@@ -348,305 +1630,333 @@ if (checkoutForm) {
             event.preventDefault();
 
 
-            const name =
-                document
-                    .getElementById("customerName")
-                    .value
-                    .trim();
-
-
-            const phone =
-                document
-                    .getElementById("customerPhone")
-                    .value
-                    .trim();
-
-
-            const address =
-                document
-                    .getElementById("customerAddress")
-                    .value
-                    .trim();
-
-
-            // ====================
-            // VALIDATION
-            // ====================
+            // ==================================================
+            // CART CHECK
+            // ==================================================
 
             if (
-                name === "" ||
-                phone === "" ||
-                address === ""
+                cart.length === 0
             ) {
 
-                alert(
-                    "Please fill all information"
+                showMessage(
+                    "Your cart is empty.",
+                    "error"
                 );
 
                 return;
 
             }
 
-
-            if (cart.length === 0) {
-
-                alert(
-                    "Your cart is empty"
-                );
-
-                return;
-
-            }
-
-
-            // ====================
-            // CALCULATE TOTAL
-            // ====================
-
-            let total = 0;
-
-
-            cart.forEach(function(product) {
-
-                total +=
-                    Number(product.price) *
-                    Number(product.quantity);
-
-            });
-
-
-            // ====================
-            // CREATE ORDER ID
-            // ====================
-
-            const orderId =
-                "BA-" +
-                Math.floor(
-                    10000 +
-                    Math.random() * 90000
-                );
-
-
-            // ====================
-            // SAVE ORDER TO FIREBASE
-            // ====================
 
             try {
 
-                if (!window.firebaseDB) {
+                // ==================================================
+                // DISABLE BUTTON
+                // ==================================================
 
-                    throw new Error(
-                        "Firebase database is not connected."
-                    );
+                if (placeOrderBtn) {
+
+                    placeOrderBtn.disabled =
+                        true;
+
+                    placeOrderBtn.textContent =
+                        "Placing Order...";
 
                 }
 
 
-                const {
-                    collection,
-                    addDoc,
-                    serverTimestamp
-                } = await import(
-                    "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"
+                showMessage(
+                    "Checking customer information...",
+                    "normal"
                 );
 
 
-                const orderRef =
-                    await addDoc(
+                // ==================================================
+                // FIREBASE
+                // ==================================================
 
-                        collection(
-                            window.firebaseDB,
-                            "orders"
-                        ),
+                const db =
+                    await waitForFirebaseDB();
 
-                        {
 
-                            orderId: orderId,
+                const {
+                    doc,
+                    setDoc,
+                    serverTimestamp
+                } =
+                    await getFirebaseFunctions();
 
-                            customerName: name,
 
-                            phone: phone,
+                // ==================================================
+                // CUSTOMER
+                // ==================================================
 
-                            address: address,
+                const customer =
+                    await getOrCreateCustomer();
 
-                            items: cart,
 
-                            total: total,
+                // ==================================================
+                // ORDER NUMBER
+                // ==================================================
 
-                            status: "new",
+                const orderNumber =
+                    await getNextOrderNumber();
 
-                            createdAt:
-                                serverTimestamp()
 
-                        }
+                // ==================================================
+                // ORDER ID
+                // ==================================================
 
+                const orderId =
+                    createOrderId(
+                        orderNumber
                     );
 
 
-                console.log(
-                    "Order saved successfully:",
-                    orderRef.id
+                // ==================================================
+                // TOTAL
+                // ==================================================
+
+                const total =
+                    calculateCartTotal();
+
+
+                // ==================================================
+                // ITEMS
+                // ==================================================
+
+                const items =
+                    cart.map(
+                        function(item) {
+
+                            return {
+
+                                name:
+                                    String(
+                                        item.name
+                                    ),
+
+                                price:
+                                    Number(
+                                        item.price
+                                    ) || 0,
+
+                                quantity:
+                                    Number(
+                                        item.quantity
+                                    ) || 0
+
+                            };
+
+                        }
+                    );
+
+
+                // ==================================================
+                // ORDER DATA
+                // ==================================================
+
+                const orderData = {
+
+                    orderId:
+                        orderId,
+
+                    orderNumber:
+                        orderNumber,
+
+                    customerId:
+                        customer.id,
+
+                    customerName:
+                        customer.name,
+
+                    phone:
+                        customer.phone,
+
+                    customerNormalizedPhone:
+                        customer.normalizedPhone,
+
+                    address:
+                        customer.address,
+
+                    items:
+                        items,
+
+                    total:
+                        total,
+
+                    status:
+                        "new",
+
+                    createdAt:
+                        serverTimestamp()
+
+                };
+
+
+                // ==================================================
+                // SAVE ORDER
+                // ==================================================
+
+                const orderRef =
+                    doc(
+                        db,
+                        "orders",
+                        orderId
+                    );
+
+
+                await setDoc(
+                    orderRef,
+                    orderData
                 );
 
 
-            } catch (error) {
+                // ==================================================
+                // UPDATE CUSTOMER
+                // ==================================================
+
+                const customerRef =
+                    doc(
+                        db,
+                        "customers",
+                        customer.id
+                    );
+
+
+                await setDoc(
+                    customerRef,
+                    {
+
+                        lastOrderId:
+                            orderId,
+
+                        lastOrderNumber:
+                            orderNumber,
+
+                        updatedAt:
+                            serverTimestamp(),
+
+                        lastOrderAt:
+                            serverTimestamp()
+
+                    },
+                    {
+                        merge: true
+                    }
+                );
+
+
+                // ==================================================
+                // LOG
+                // ==================================================
+
+                console.log(
+                    "================================"
+                );
+
+                console.log(
+                    "ORDER SAVED SUCCESSFULLY"
+                );
+
+                console.log(
+                    "Order ID:",
+                    orderId
+                );
+
+                console.log(
+                    "Order Number:",
+                    orderNumber
+                );
+
+                console.log(
+                    "Customer:",
+                    customer
+                );
+
+                console.log(
+                    "Items:",
+                    items
+                );
+
+                console.log(
+                    "Total:",
+                    total
+                );
+
+                console.log(
+                    "================================"
+                );
+
+
+                // ==================================================
+                // SHOW COMPLETE ORDER TO CUSTOMER
+                // ==================================================
+
+                showOrderDetails(
+                    orderNumber,
+                    orderId,
+                    customer,
+                    items,
+                    total
+                );
+
+
+                // ==================================================
+                // CLEAR CART
+                // ==================================================
+
+                cart = [];
+
+                saveCart();
+
+                renderCart();
+
+
+                // ==================================================
+                // KEEP CUSTOMER
+                // ==================================================
+
+                existingCustomer =
+                    customer;
+
+            }
+            catch (error) {
 
                 console.error(
-                    "Firebase Error:",
+                    "================================"
+                );
+
+                console.error(
+                    "PLACE ORDER ERROR:",
                     error
                 );
 
-
-                alert(
-                    "There was a problem saving the order. Please try again."
+                console.error(
+                    "================================"
                 );
 
 
-                return;
-
-            }
-
-
-            // ====================
-            // ORDER DETAILS
-            // ====================
-
-            let orderItems = "";
-
-
-            cart.forEach(function(product) {
-
-                const productTotal =
-                    Number(product.price) *
-                    Number(product.quantity);
-
-
-                orderItems += `
-
-                    <p>
-
-                        ${product.name}
-
-                        × ${product.quantity}
-
-                        =
-
-                        ${productTotal} EGP
-
-                    </p>
-
-                `;
-
-            });
-
-
-            // ====================
-            // SHOW CONFIRMATION
-            // ====================
-
-            const orderMessage =
-                document.getElementById(
-                    "orderMessage"
+                showMessage(
+                    "Error placing order: " +
+                    error.message,
+                    "error"
                 );
 
+            }
+            finally {
 
-            if (orderMessage) {
+                if (placeOrderBtn) {
 
-                orderMessage.innerHTML = `
+                    placeOrderBtn.disabled =
+                        false;
 
-                    <h2>
-                        Order Confirmed! ✅
-                    </h2>
+                    placeOrderBtn.textContent =
+                        "Place Order";
 
-                    <h3>
-                        Order ID: ${orderId}
-                    </h3>
-
-                    <hr>
-
-                    <p>
-                        Customer:
-                        ${name}
-                    </p>
-
-                    <p>
-                        Phone:
-                        ${phone}
-                    </p>
-
-                    <p>
-                        Address:
-                        ${address}
-                    </p>
-
-                    <hr>
-
-                    <h3>
-                        Order Details
-                    </h3>
-
-                    ${orderItems}
-
-                    <hr>
-
-                    <h2>
-                        Total:
-                        ${total} EGP
-                    </h2>
-
-                    <button
-                        type="button"
-                        onclick="sendWhatsApp()">
-                        Order on WhatsApp
-                    </button>
-
-                    <button
-                        type="button"
-                        onclick="newOrder()">
-                        New Order
-                    </button>
-
-                `;
+                }
 
             }
-
-
-            // ====================
-            // SAVE ORDER FOR WHATSAPP
-            // ====================
-
-            window.lastOrder = {
-
-                orderId: orderId,
-
-                name: name,
-
-                phone: phone,
-
-                address: address,
-
-                items: [...cart],
-
-                total: total
-
-            };
-
-
-            // ====================
-            // CLEAR CART AFTER ORDER
-            // ====================
-
-            cart = [];
-
-
-            localStorage.removeItem(
-                "cart"
-            );
-
-
-            displayCart();
-
-            updateCartCount();
 
         }
     );
@@ -654,178 +1964,114 @@ if (checkoutForm) {
 }
 
 
-// ====================
-// NEW ORDER
-// ====================
+// ==========================================================
+// VIEW MENU
+// ==========================================================
 
-function newOrder() {
-
-    const nameInput =
-        document.getElementById(
-            "customerName"
-        );
+const viewMenu =
+    document.getElementById(
+        "viewMenu"
+    );
 
 
-    const phoneInput =
-        document.getElementById(
-            "customerPhone"
-        );
+if (viewMenu) {
+
+    viewMenu.addEventListener(
+        "click",
+        function() {
+
+            const menu =
+                document.getElementById(
+                    "menu"
+                );
 
 
-    const addressInput =
-        document.getElementById(
-            "customerAddress"
-        );
+            if (menu) {
 
+                menu.scrollIntoView({
+                    behavior: "smooth"
+                });
 
-    const orderMessage =
-        document.getElementById(
-            "orderMessage"
-        );
+            }
 
-
-    if (nameInput) {
-
-        nameInput.value = "";
-
-    }
-
-
-    if (phoneInput) {
-
-        phoneInput.value = "";
-
-    }
-
-
-    if (addressInput) {
-
-        addressInput.value = "";
-
-    }
-
-
-    if (orderMessage) {
-
-        orderMessage.innerHTML = "";
-
-    }
-
-
-    window.lastOrder = null;
-
-}
-
-
-// ====================
-// WHATSAPP ORDER
-// ====================
-
-function sendWhatsApp() {
-
-    const order =
-        window.lastOrder;
-
-
-    if (!order) {
-
-        alert(
-            "Please place an order first."
-        );
-
-        return;
-
-    }
-
-
-    // ====================
-    // PRODUCTS MESSAGE
-    // ====================
-
-    let itemsMessage = "";
-
-
-    order.items.forEach(function(product) {
-
-        const productTotal =
-            Number(product.price) *
-            Number(product.quantity);
-
-
-        itemsMessage +=
-            product.name +
-            " x " +
-            product.quantity +
-            " = " +
-            productTotal +
-            " EGP\n";
-
-    });
-
-
-    // ====================
-    // WHATSAPP MESSAGE
-    // ====================
-
-    const message =
-        "New Burger Anas Order 🍔\n\n" +
-
-        "Order ID: " +
-        order.orderId +
-        "\n\n" +
-
-        "Customer: " +
-        order.name +
-        "\n" +
-
-        "Phone: " +
-        order.phone +
-        "\n" +
-
-        "Address: " +
-        order.address +
-        "\n\n" +
-
-        "Order Details:\n" +
-
-        itemsMessage +
-
-        "\nTotal: " +
-        order.total +
-        " EGP";
-
-
-    // ====================
-    // WHATSAPP NUMBER
-    // ====================
-
-    const phoneNumber =
-        "201208119371";
-
-
-    // ====================
-    // OPEN WHATSAPP
-    // ====================
-
-    const whatsappURL =
-        "https://wa.me/" +
-        phoneNumber +
-        "?text=" +
-        encodeURIComponent(message);
-
-
-    window.open(
-        whatsappURL,
-        "_blank"
+        }
     );
 
 }
 
 
-// ====================
-// START
-// ====================
+// ==========================================================
+// STORAGE EVENT
+// ==========================================================
 
-displayCart();
+window.addEventListener(
+    "storage",
+    function() {
+
+        try {
+
+            const savedCart =
+                localStorage.getItem(
+                    "cart"
+                );
+
+
+            cart =
+                savedCart
+                    ? JSON.parse(savedCart)
+                    : [];
+
+
+            if (
+                !Array.isArray(cart)
+            ) {
+
+                cart = [];
+
+            }
+
+        }
+        catch (error) {
+
+            cart = [];
+
+        }
+
+
+        renderCart();
+
+        updateCartCount();
+
+    }
+);
+
+
+// ==========================================================
+// INITIALIZE
+// ==========================================================
+
+renderCart();
 
 updateCartCount();
+
+
+// ==========================================================
+// FIREBASE STATUS
+// ==========================================================
+
+waitForFirebaseDB()
+    .then(function() {
+
+        console.log(
+            "✓ Firebase DB connected successfully."
+        );
+
+    })
+    .catch(function(error) {
+
+        console.error(
+            "Firebase connection error:",
+            error
+        );
+
+    });
