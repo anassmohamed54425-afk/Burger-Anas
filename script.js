@@ -70,6 +70,14 @@ let customerSearchTimer = null;
 
 
 // ==========================================================
+// WHATSAPP NUMBER
+// ==========================================================
+
+const WHATSAPP_NUMBER =
+    "201208119371";
+
+
+// ==========================================================
 // ELEMENTS
 // ==========================================================
 
@@ -258,6 +266,306 @@ function showMessage(
 
 
 // ==========================================================
+// CLEAR CUSTOMER STATUS MESSAGE
+// ==========================================================
+
+function clearCustomerStatusMessage() {
+
+    const possibleSelectors = [
+
+        "#customerMessage",
+        "#customerStatus",
+        "#phoneMessage",
+        "#customerFoundMessage",
+        ".customer-message",
+        ".customer-status",
+        ".phone-message",
+        ".customer-status-message",
+        "[data-customer-message]",
+        "[data-customer-status]"
+
+    ];
+
+
+    possibleSelectors.forEach(
+        function(selector) {
+
+            const elements =
+                document.querySelectorAll(
+                    selector
+                );
+
+
+            elements.forEach(
+                function(element) {
+
+                    element.textContent =
+                        "";
+
+                    element.innerHTML =
+                        "";
+
+                    element.style.display =
+                        "none";
+
+                }
+            );
+
+        }
+    );
+
+
+    if (orderMessage) {
+
+        const currentText =
+            String(
+                orderMessage.textContent || ""
+            ).trim();
+
+
+        if (
+            currentText.includes(
+                "This phone number belongs to an existing customer"
+            )
+        ) {
+
+            orderMessage.innerHTML =
+                "";
+
+            orderMessage.textContent =
+                "";
+
+            orderMessage.style.display =
+                "none";
+
+        }
+
+    }
+
+}
+
+
+// ==========================================================
+// CREATE WHATSAPP MESSAGE
+// ==========================================================
+
+function createWhatsAppMessage(
+    orderNumber,
+    orderId,
+    customer,
+    items,
+    total
+) {
+
+    let message =
+        "🍔 BURGER ANAS - NEW ORDER\n\n";
+
+
+    message +=
+        "Order Number: #" +
+        orderNumber +
+        "\n";
+
+
+    message +=
+        "Order ID: " +
+        orderId +
+        "\n\n";
+
+
+    message +=
+        "👤 Customer Information\n";
+
+
+    message +=
+        "Name: " +
+        customer.name +
+        "\n";
+
+
+    message +=
+        "Phone: " +
+        customer.phone +
+        "\n";
+
+
+    message +=
+        "Address: " +
+        customer.address +
+        "\n\n";
+
+
+    message +=
+        "🛒 Order Details\n";
+
+
+    items.forEach(
+        function(item) {
+
+            const itemTotal =
+                Number(item.price) *
+                Number(item.quantity);
+
+
+            message +=
+                "• " +
+                item.name +
+                " × " +
+                item.quantity +
+                " = " +
+                itemTotal +
+                " EGP\n";
+
+        }
+    );
+
+
+    message +=
+        "\n💰 Total: " +
+        total +
+        " EGP\n\n";
+
+
+    message +=
+        "Thank you for ordering from Burger Anas 🍔";
+
+
+    return message;
+
+}
+
+
+// ==========================================================
+// SEND ORDER TO WHATSAPP
+// ==========================================================
+
+function sendOrderToWhatsApp(
+    orderNumber,
+    orderId,
+    customer,
+    items,
+    total
+) {
+
+    const message =
+        createWhatsAppMessage(
+            orderNumber,
+            orderId,
+            customer,
+            items,
+            total
+        );
+
+
+    const whatsappURL =
+        "https://wa.me/" +
+        WHATSAPP_NUMBER +
+        "?text=" +
+        encodeURIComponent(message);
+
+
+    window.open(
+        whatsappURL,
+        "_blank"
+    );
+
+}
+
+
+// ==========================================================
+// NEW ORDER
+// ==========================================================
+
+window.newOrder =
+    function() {
+
+        if (orderMessage) {
+
+            orderMessage.innerHTML =
+                "";
+
+            orderMessage.textContent =
+                "";
+
+            orderMessage.style.display =
+                "none";
+
+        }
+
+
+        clearCustomerStatusMessage();
+
+
+        clearCustomerFormWithoutMessage();
+
+
+        if (checkoutForm) {
+
+            checkoutForm.reset();
+
+        }
+
+
+        window.scrollTo({
+
+            top: 0,
+
+            behavior: "smooth"
+
+        });
+
+    };
+
+
+// ==========================================================
+// CLEAR CUSTOMER FORM WITHOUT MESSAGE
+// ==========================================================
+
+function clearCustomerFormWithoutMessage() {
+
+    if (customerName) {
+
+        customerName.value =
+            "";
+
+    }
+
+
+    if (customerPhone) {
+
+        customerPhone.value =
+            "";
+
+    }
+
+
+    if (customerAddress) {
+
+        customerAddress.value =
+            "";
+
+    }
+
+
+    existingCustomer =
+        null;
+
+
+    clearTimeout(
+        customerSearchTimer
+    );
+
+
+    customerSearchTimer =
+        null;
+
+
+    unlockCustomerFields();
+
+}
+
+
+// ==========================================================
 // SHOW ORDER DETAILS
 // ==========================================================
 
@@ -439,6 +747,50 @@ function showOrderDetails(
             </div>
 
 
+            <!-- WHATSAPP BUTTON -->
+
+            <button
+                type="button"
+                onclick="sendCurrentOrderToWhatsApp()"
+                style="
+                    width:100%;
+                    margin-top:20px;
+                    padding:13px;
+                    border:none;
+                    border-radius:10px;
+                    background:#25D366;
+                    color:white;
+                    font-size:16px;
+                    font-weight:bold;
+                    cursor:pointer;
+                "
+            >
+                📱 Send Order to WhatsApp
+            </button>
+
+
+            <!-- NEW ORDER BUTTON -->
+
+            <button
+                type="button"
+                onclick="newOrder()"
+                style="
+                    width:100%;
+                    margin-top:10px;
+                    padding:13px;
+                    border:none;
+                    border-radius:10px;
+                    background:#ffd21f;
+                    color:#111827;
+                    font-size:16px;
+                    font-weight:bold;
+                    cursor:pointer;
+                "
+            >
+                🍔 New Order
+            </button>
+
+
             <div
                 style="
                     margin-top:15px;
@@ -457,7 +809,60 @@ function showOrderDetails(
     orderMessage.style.display =
         "block";
 
+
+    // ======================================================
+    // SAVE CURRENT ORDER FOR WHATSAPP BUTTON
+    // ======================================================
+
+    window.currentOrderForWhatsApp = {
+
+        orderNumber:
+            orderNumber,
+
+        orderId:
+            orderId,
+
+        customer:
+            customer,
+
+        items:
+            items,
+
+        total:
+            total
+
+    };
+
 }
+
+
+// ==========================================================
+// SEND CURRENT ORDER TO WHATSAPP
+// ==========================================================
+
+window.sendCurrentOrderToWhatsApp =
+    function() {
+
+        const order =
+            window.currentOrderForWhatsApp;
+
+
+        if (!order) {
+
+            return;
+
+        }
+
+
+        sendOrderToWhatsApp(
+            order.orderNumber,
+            order.orderId,
+            order.customer,
+            order.items,
+            order.total
+        );
+
+    };
 
 
 // ==========================================================
@@ -1618,6 +2023,108 @@ function createOrderId(orderNumber) {
 
 
 // ==========================================================
+// CLEAR CUSTOMER FORM AFTER SUCCESSFUL ORDER
+// ==========================================================
+
+function clearCustomerForm() {
+
+    clearCustomerStatusMessage();
+
+
+    if (customerName) {
+
+        customerName.value =
+            "";
+
+    }
+
+
+    if (customerPhone) {
+
+        customerPhone.value =
+            "";
+
+    }
+
+
+    if (customerAddress) {
+
+        customerAddress.value =
+            "";
+
+    }
+
+
+    existingCustomer =
+        null;
+
+
+    clearTimeout(
+        customerSearchTimer
+    );
+
+
+    customerSearchTimer =
+        null;
+
+
+    unlockCustomerFields();
+
+}
+
+
+// ==========================================================
+// CLEAR CART AFTER SUCCESSFUL ORDER
+// ==========================================================
+
+function clearCartAfterSuccessfulOrder() {
+
+    cart = [];
+
+
+    try {
+
+        localStorage.removeItem(
+            "cart"
+        );
+
+    }
+    catch (error) {
+
+        console.error(
+            "Cart localStorage clear error:",
+            error
+        );
+
+    }
+
+
+    try {
+
+        localStorage.setItem(
+            "cart",
+            JSON.stringify([])
+        );
+
+    }
+    catch (error) {
+
+        console.error(
+            "Cart localStorage reset error:",
+            error
+        );
+
+    }
+
+
+    renderCart();
+
+    updateCartCount();
+
+}
+
+
+// ==========================================================
 // PLACE ORDER
 // ==========================================================
 
@@ -1890,6 +2397,20 @@ if (checkoutForm) {
 
 
                 // ==================================================
+                // CLEAR CUSTOMER MESSAGE + FORM
+                // ==================================================
+
+                clearCustomerForm();
+
+
+                // ==================================================
+                // CLEAR CART
+                // ==================================================
+
+                clearCartAfterSuccessfulOrder();
+
+
+                // ==================================================
                 // SHOW COMPLETE ORDER TO CUSTOMER
                 // ==================================================
 
@@ -1903,22 +2424,11 @@ if (checkoutForm) {
 
 
                 // ==================================================
-                // CLEAR CART
-                // ==================================================
-
-                cart = [];
-
-                saveCart();
-
-                renderCart();
-
-
-                // ==================================================
-                // KEEP CUSTOMER
+                // FINAL STATE
                 // ==================================================
 
                 existingCustomer =
-                    customer;
+                    null;
 
             }
             catch (error) {
